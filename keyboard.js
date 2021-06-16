@@ -46,10 +46,10 @@ const Keyboard = {
     _createKeys() {
         this.fragment=document.createDocumentFragment();
         const keyLayout = [
-            "1", "2", "3", "4", "5", "6", "7", "8", "9", "0", "backspace",
-            "q", "w", "e", "r", "t", "y", "u", "i", "o", "p",
-            "caps", "a", "s", "d", "f", "g", "h", "j", "k", "l", "enter",
-            "done", "z", "x", "c", "v", "b", "n", "m", ",", ".", "?",
+            "1", "2", "3", "4", "5", "6", "7", "8", "9", "0","-","=","backspace",
+            "q", "w", "e", "r", "t", "y", "u", "i", "o", "p","[","]",
+            "caps", "a", "s", "d", "f", "g", "h", "j", "k", "l", ";","'",
+            "done", "z", "x", "c", "v", "b", "n", "m", ",", ".", "/",
             "space"
         ];
   
@@ -60,7 +60,7 @@ const Keyboard = {
   
         keyLayout.forEach(key => {
             const keyElement = document.createElement("button");
-            const insertLineBreak = ["backspace", "p", "enter", "?"].indexOf(key) !== -1;
+            const insertLineBreak = ["backspace", "]", "'", "/"].indexOf(key) !== -1;
   
             // Add attributes/classes/id
             keyElement.setAttribute("type", "button");
@@ -85,7 +85,6 @@ const Keyboard = {
                     keyElement.addEventListener("click", () => {
                         this._toggleCapsLock();
                         keyElement.classList.toggle("keyboard__key--active", this.properties.capsLock);
-                        console.log(keyElement);
                     });
   
                     break;
@@ -171,6 +170,19 @@ const Keyboard = {
         this.elements.main.classList.add("keyboard--hidden");
     },
     glow(key){
+        if(key===" ")
+        {
+            this.glow_space();
+            return;
+        }
+        if(key!=key.toLowerCase())
+        {
+            if(!this.properties.capsLock)
+            {
+                this._toggleCapsLock();
+            }
+            this.glow_caps();
+        }
         const keyElement=document.getElementById((key).toLowerCase());
         if(!keyElement.classList.value.includes("keyboard__key--activate"))
         {
@@ -179,10 +191,63 @@ const Keyboard = {
     },
     dim(key)
     {
+        if(key===" ")
+        {
+             this.dim_space();
+             return;
+        }
+        if(key!=key.toLowerCase())
+        {
+            if(this.properties.capsLock)
+            {
+                this._toggleCapsLock();
+            }
+            this.dim_caps();
+        }
         const keyElement=document.getElementById((key).toLowerCase());
         if(keyElement.classList.value.includes("keyboard__key--activate"))
         {
             keyElement.classList.remove("keyboard__key--activate");
         } 
+    },
+    glow_space()
+    {
+        const keyElement=document.getElementById("space");
+        if(!keyElement.classList.value.includes("keyboard__key--extra-wide--activable"))
+        {
+            keyElement.classList.add("keyboard__key--extra-wide--activable");
+        }
+    },
+    dim_space()
+    {
+        const keyElement=document.getElementById("space");
+        if(keyElement.classList.value.includes("keyboard__key--extra-wide--activable"))
+        {
+            keyElement.classList.remove("keyboard__key--extra-wide--activable");
+            keyElement.classList.remove("keyboard__key--extra-wide--activable");
+        }
+    },
+    glow_caps()
+    {
+        const keyElement=document.getElementById("caps");
+        if(!keyElement.classList.value.includes("keyboard__key--activate"))
+        {
+            keyElement.classList.add("keyboard__key--activate");
+        }
+    },
+    dim_caps()
+    {
+        const keyElement=document.getElementById("caps");
+        if(keyElement.classList.value.includes("keyboard__key--activate"))
+        {
+            keyElement.classList.remove("keyboard__key--activate");
+        }
+    },
+    glow_dim(textToType,textTyped,pressedKey)
+    {
+        const str= textToType;
+        const length=textTyped.length;
+        this.dim(pressedKey);
+        this.glow(str[length]||" ");
     }
   };

@@ -11,10 +11,11 @@ let startTime=0
 let rawKeyPressCount=0
 let accuracy, rawWpm, correctedWpm
 let test=true;
+
 function reset() {
   index = Math.trunc(Math.random() * quotes.length);
-  messageToType = quotes[index];
-  
+ // messageToType = quotes[index];
+  messageToType="Hello po;'rr [-=]";
   console.log(`${index} / ${quotes.length} ${messageToType.length}`);
   string = "";
   score = 0;
@@ -123,17 +124,13 @@ function keyPressed() {
   }
   if(wordObjectBuffer.id)
   {
-    const str= wordObjectBuffer.title;
-    const length=string.length;
-    try{
-      Keyboard.dim(key);
-      Keyboard.glow(str[length]);
-    }
-    catch(e)
-    {
-      console.log("space");
-    }
+    // const str= wordObjectBuffer.title;
+    // const length=string.length;
+    //   Keyboard.dim(key);
+    //   Keyboard.glow(str[length]||" ");
+    Keyboard.glow_dim(wordObjectBuffer.title,string,key);
   }
+
 }
 
 

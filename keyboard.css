@@ -45,8 +45,8 @@
     margin: 3px;
     border-radius: 4px;
     border: none;
-    background:red;
-    color: #ffffff;
+    background:rgb(234,240,240);
+    color: black;
     font-size: 1.05rem;
     outline: none;
     cursor: pointer;
@@ -60,7 +60,7 @@
 }
 
 .keyboard__key:active {
-    background:red;
+    background:rgb(234,240,240);
 }
 
 .keyboard__key--wide {
@@ -68,8 +68,44 @@
 }
 
 .keyboard__key--extra-wide {
+    height: 45px;
+    margin: 3px;
+    border-radius: 4px;
+    border: none;
+    background: rgba(255, 255, 255, 0.2);
+    color: #ffffff;
+    font-size: 1.05rem;
+    outline: none;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    vertical-align: top;
+    padding: 0;
+    -webkit-tap-highlight-color: transparent;
+    position: relative;
     width: 36%;
     max-width: 500px;
+}
+.keyboard__key--extra-wide--activable {
+    height: 45px;
+    margin: 3px;
+    border-radius: 4px;
+    border: none;
+    font-size: 1.05rem;
+    outline: none;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    vertical-align: top;
+    padding: 0;
+    -webkit-tap-highlight-color: transparent;
+    position: relative;
+    width: 36%;
+    max-width: 500px;
+    background:rgb(234,240,240);
+    color: black;
 }
 
 .keyboard__key--activatable::after {
@@ -79,13 +115,12 @@
     position: absolute;
     width: 8px;
     height: 8px;
-    background: red;
     border-radius: 50%;
 }
-
+/* 
 .keyboard__key--active::after {
     background: #08ff00;
-}
+} */
 
 .keyboard__key--dark {
     background: rgba(0, 0, 0, 0.25);
