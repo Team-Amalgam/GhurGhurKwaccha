@@ -2,8 +2,9 @@ var sceneManager;
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
-  var sceneList = [MenuScene, CreditScene];
+  var sceneList = [PlayScene, MenuScene, CreditScene];
   sceneManager = new SceneManager(sceneList);
+  sceneManager.enterScene("play");
 }
 
 function draw() {
@@ -12,4 +13,7 @@ function draw() {
 
 function keyPressed() {
   sceneManager.keyPressed(key);
+}
+function windowResized() {
+  resizeCanvas(windowWidth, windowHeight);
 }
