@@ -7,15 +7,14 @@ let wordObjectArray = [];
 let wordObjectBuffer = {};
 let string = "";
 let score = 0;
-let startTime=0
-let rawKeyPressCount=0
-let accuracy, rawWpm, correctedWpm
-let test=true;
+let startTime = 0;
+let rawKeyPressCount = 0;
+let accuracy, rawWpm, correctedWpm;
+let test = true;
 
 function reset() {
   index = Math.trunc(Math.random() * quotes.length);
- // messageToType = quotes[index];
-  messageToType="Hello po;'rr [-=]";
+  messageToType = quotes[index];
   console.log(`${index} / ${quotes.length} ${messageToType.length}`);
   string = "";
   score = 0;
@@ -27,7 +26,7 @@ function reset() {
     yPosition: 100 + Math.trunc(i / 5) * 50,
     isSelected: false,
   }));
-  totalKeyCount=0;
+  totalKeyCount = 0;
   //Keyboard.glow(document.getElementById(wordObjectArray[0].title[0].toLowerCase()));
   Keyboard.glow(wordObjectArray[0].title[0]);
 }
@@ -81,7 +80,7 @@ function keyPressed() {
   }
   keyPressAnalytics(key);
 
-  if (key == "Backspace" && string!=='') {
+  if (key == "Backspace" && string !== "") {
     keyPressCount[string[string.length - 1]] -= 1;
     string = string.slice(0, -1);
   } else if (key == " ") {
@@ -122,37 +121,28 @@ function keyPressed() {
       }
     }
   }
-  if(wordObjectBuffer.id)
-  {
+  if (wordObjectBuffer.id) {
     // const str= wordObjectBuffer.title;
     // const length=string.length;
     //   Keyboard.dim(key);
     //   Keyboard.glow(str[length]||" ");
-    Keyboard.glow_dim(wordObjectBuffer.title,string,key);
+    Keyboard.glow_dim(wordObjectBuffer.title, string, key);
   }
-
 }
 
-
-
-function keyPressAnalytics(key){
-  
-  if(key.length === 1){
-    
-    if(words.length === wordObjectArray.length && string === ''){
-      console.log('start', millis())
-      startTime=millis()
-      rawKeyPressCount=0
+function keyPressAnalytics(key) {
+  if (key.length === 1) {
+    if (words.length === wordObjectArray.length && string === "") {
+      console.log("start", millis());
+      startTime = millis();
+      rawKeyPressCount = 0;
     }
-    rawKeyPressCount+=1
-  if (keyPressCount[key]) {
-        keyPressCount[key] += 1;
-      } else {
-        keyPressCount[key] = 1;
-      }
+    rawKeyPressCount += 1;
+    if (keyPressCount[key]) {
+      keyPressCount[key] += 1;
+    } else {
+      keyPressCount[key] = 1;
+    }
   }
-  console.log(rawKeyPressCount, messageToType.length)
-  
+  console.log(rawKeyPressCount, messageToType.length);
 }
-
-
