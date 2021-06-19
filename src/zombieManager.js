@@ -23,7 +23,8 @@ class ZombieManager {
             // 100 + (index % 5) * 100,
             // 100 + Math.trunc(index / 5) * 50,
             word,
-            level * 2 + 1
+            level * 2 + 1,
+            gif_loadImg
           )
       );
     }
