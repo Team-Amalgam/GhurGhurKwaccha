@@ -3,12 +3,6 @@ class MenuScene {
     this.sceneManager = sceneManager;
     this.sceneName = "menu";
   }
-  setup() {
-    console.log(" Setup : Menu ");
-  }
-  update() {
-    //console.log(" Update : Menu ")
-  }
   draw() {
     clear();
     background(220);
@@ -20,7 +14,16 @@ class MenuScene {
   }
   keyPressed(key) {
     if (String(key) === "s") {
-      this.sceneManager.switchScene("credit");
+      this.sceneManager.enterScene("credit");
     }
+  }
+  onSceneEnter() {
+    console.log(" SceneEnter : Menu ");
+  }
+  onSceneExit() {
+    console.log(" SceneExit : Menu ");
+  }
+  update() {
+    //console.log(" Update : Menu ")
   }
 }

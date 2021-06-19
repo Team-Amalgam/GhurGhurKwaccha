@@ -3,10 +3,6 @@ class CreditScene {
     this.sceneManager = sceneManager;
     this.sceneName = "credit";
   }
-  setup() {
-    console.log(" Setup : Credit ");
-  }
-  update() {}
   draw() {
     clear();
     background(220);
@@ -17,7 +13,14 @@ class CreditScene {
   }
   keyPressed(key) {
     if (String(key) === "s") {
-      this.sceneManager.switchScene("menu");
+      this.sceneManager.enterScene("menu");
     }
   }
+  onSceneEnter() {
+    console.log(" SceneEnter : Credit ");
+  }
+  onSceneExit() {
+    console.log(" SceneExit : Credit ");
+  }
+  update() {}
 }
