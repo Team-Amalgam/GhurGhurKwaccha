@@ -6,6 +6,11 @@ class SceneManager {
     if (this.currentScene && this.currentScene.onSceneExit) {
       this.currentScene.onSceneExit();
     }
+    if (currentLanguage == "nepali") {
+      textFont(nepaliFont, 30);
+    } else {
+      textFont("Georgia", 22);
+    }
     var existingScene = this.getScene(newSceneName);
     if (existingScene) {
       this.currentScene = existingScene;

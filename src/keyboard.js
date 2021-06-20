@@ -1,5 +1,5 @@
 class Keyboard {
-  constructor() {
+  constructor(layout = "US", language = "english") {
     this.elements = {
       main: null,
       keysContainer: null,
@@ -14,6 +14,11 @@ class Keyboard {
       capsLock: false,
     };
     this.fragment = {};
+    this.layout = layout;
+    this.language = language;
+    //console.log(combinedKeyLayout);
+    this.keyLayout = combinedKeyLayout[layout];
+    this.upperCaseMapping = mapping[layout];
     this.init();
   }
   init() {
@@ -33,15 +38,6 @@ class Keyboard {
     // Add to DOM
     this.elements.main.appendChild(this.elements.keysContainer);
     document.body.appendChild(this.elements.main);
-
-    // // Automatically use keyboard for elements with .use-keyboard-input
-    // document.querySelectorAll(".use-keyboard-input").forEach(element => {
-    //     element.addEventListener("focus", () => {
-    //         this.open(element.value, currentValue => {
-    //             element.value = currentValue;
-    //         });
-    //     });
-    // });
   }
   _createKeys() {
     this.fragment = document.createDocumentFragment();
@@ -51,13 +47,26 @@ class Keyboard {
       return `<i class="material-icons">${icon_name}</i>`;
     };
 
-    keyLayout.forEach((key) => {
+    this.keyLayout.forEach((key) => {
       const keyElement = document.createElement("button");
-      const insertLineBreak = ["backspace", "]", "'", "/"].indexOf(key) !== -1;
+      let insertLineBreak = [];
+      if (this.layout == "US") {
+        insertLineBreak = ["backspace", "\\", "'", "/"].indexOf(key) !== -1;
+      } else if (this.layout == "UK") {
+        insertLineBreak = ["backspace", "\\", "'", "/"].indexOf(key) !== -1;
+      }
 
       // Add attributes/classes/id
       keyElement.setAttribute("type", "button");
       keyElement.classList.add("keyboard__key");
+      if (this.language == "english") {
+        keyElement.style.fontFamily =
+          '"Lucida Console", "Courier New", monospace';
+        keyElement.style.fontSize = "20px";
+      } else if (this.language == "nepali") {
+        keyElement.style.fontFamily = "preeti";
+        keyElement.style.fontSize = "40px";
+      }
       keyElement.setAttribute("id", key);
       switch (key) {
         case "backspace":
@@ -128,11 +137,11 @@ class Keyboard {
           break;
 
         default:
-          keyElement.textContent = key.toLowerCase();
+          keyElement.textContent = this.getLowerCase(key);
           keyElement.addEventListener("click", () => {
             this.properties.value += this.properties.capsLock
-              ? key.toUpperCase()
-              : key.toLowerCase();
+              ? this.getUpperCase(key)
+              : this.getLowerCase(key);
             this._triggerEvent("oninput");
           });
 
@@ -156,8 +165,8 @@ class Keyboard {
     for (const key of this.elements.keys) {
       if (key.childElementCount === 0) {
         key.textContent = this.properties.capsLock
-          ? key.textContent.toUpperCase()
-          : key.textContent.toLowerCase();
+          ? this.getUpperCase(key.textContent)
+          : this.getLowerCase(key.textContent);
       }
     }
   }
@@ -179,13 +188,13 @@ class Keyboard {
       this.glow_space();
       return;
     }
-    if (key != key.toLowerCase()) {
+    if (key != this.getLowerCase(key)) {
       if (!this.properties.capsLock) {
         this._toggleCapsLock();
       }
       this.glow_caps();
     }
-    const keyElement = document.getElementById(key.toLowerCase());
+    const keyElement = document.getElementById(this.getLowerCase(key));
     if (!keyElement.classList.value.includes("keyboard__key--activate")) {
       keyElement.classList.add("keyboard__key--activate");
     }
@@ -200,7 +209,7 @@ class Keyboard {
       this._toggleCapsLock();
     }
     this.dim_caps();
-    const keyElement = document.getElementById(key.toLowerCase());
+    const keyElement = document.getElementById(this.getLowerCase(key));
     if (keyElement.classList.value.includes("keyboard__key--activate")) {
       keyElement.classList.remove("keyboard__key--activate");
     }
@@ -239,8 +248,8 @@ class Keyboard {
     }
   }
   dim_all() {
-    for (var item in keyLayout) {
-      this.dim(keyLayout[item]);
+    for (var item in this.keyLayout) {
+      this.dim(this.keyLayout[item]);
     }
   }
   glow_dim(textToType, textTyped) {
@@ -269,55 +278,15 @@ class Keyboard {
       }
     }
   }
+  getUpperCase(key) {
+    return Object.keys(this.upperCaseMapping).includes(key)
+      ? this.upperCaseMapping[key]
+      : key.toUpperCase();
+  }
+  getLowerCase(key) {
+    const x = Object.keys(this.upperCaseMapping).find(
+      (keyz) => this.upperCaseMapping[keyz] === key
+    );
+    return x ? x : key.toLowerCase();
+  }
 }
-const keyLayout = [
-  "1",
-  "2",
-  "3",
-  "4",
-  "5",
-  "6",
-  "7",
-  "8",
-  "9",
-  "0",
-  "-",
-  "=",
-  "backspace",
-  "q",
-  "w",
-  "e",
-  "r",
-  "t",
-  "y",
-  "u",
-  "i",
-  "o",
-  "p",
-  "[",
-  "]",
-  "caps",
-  "a",
-  "s",
-  "d",
-  "f",
-  "g",
-  "h",
-  "j",
-  "k",
-  "l",
-  ";",
-  "'",
-  "done",
-  "z",
-  "x",
-  "c",
-  "v",
-  "b",
-  "n",
-  "m",
-  ",",
-  ".",
-  "/",
-  "space",
-];

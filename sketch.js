@@ -1,12 +1,13 @@
 var sceneManager;
 var gif_loadImg;
+var nepaliFont;
+var currentLanguage = "english";
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
   var sceneList = [PlayScene, MenuScene, CreditScene, TutorScene];
   sceneManager = new SceneManager(sceneList);
   sceneManager.enterScene("tutor");
-  //image(gif_loadImg, 50, 0, 40, 20, 50, 50, 50, 50);
 }
 
 function draw() {
@@ -26,4 +27,5 @@ function preload() {
     loadImage("assets/die2.png"),
     loadImage("assets/die1.png"),
   ];
+  nepaliFont = loadFont("css/font.otf");
 }

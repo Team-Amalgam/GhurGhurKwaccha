@@ -16,10 +16,14 @@ class Zombie {
   }
   draw() {
     fill(color(this.isTargeted ? "orange" : "yellow"));
-    rect(this.xPosition - 2, this.yPosition - 10, 9 * this.word.length, 20);
+    rect(this.xPosition - 2, this.yPosition - 20, 18 * this.word.length, 30);
     fill(color("black"));
-    text(this.word, this.xPosition, this.yPosition);
-    text(this.correctlyTypedString, this.xPosition, this.yPosition - 10);
+    text(
+      this.word.substring(this.correctlyTypedString.length),
+      this.xPosition + 5,
+      this.yPosition - 10 + 10
+    );
+    //text(this.correctlyTypedString, this.xPosition, this.yPosition - 10);
     this.drawImage();
   }
   update() {
@@ -45,9 +49,6 @@ class Zombie {
         }
       }
     } else {
-      console.log("Here");
-      // image(this.skin[2], this.xPosition, this.yPosition);
-      // image(this.skin[3], this.xPosition, this.yPosition);
     }
   }
   static count = 0;

@@ -1,3 +1,9 @@
+@font-face {
+  font-family: preeti;
+  src: url("font.otf");
+  font-weight: bold;
+}
+
 .keyboard {
   position: fixed;
   left: 0;
@@ -125,3 +131,10 @@
 .keyboard__key--dark {
   background: rgba(0, 0, 0, 0.25);
 }
+/* 
+.nepali-font {
+  font-family: "Lucida Console", "Courier New", monospace;
+}
+.english-font {
+  font-family: "Lucida Handwriting", "Courier New", monospace;
+} */
