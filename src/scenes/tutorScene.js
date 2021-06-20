@@ -1,7 +1,7 @@
-class PlayScene {
+class TutorScene {
   constructor(sceneManager) {
     this.sceneManager = sceneManager;
-    this.sceneName = "play";
+    this.sceneName = "tutor";
     this.zombieToFire;
   }
 
@@ -16,15 +16,15 @@ class PlayScene {
     this.zombieManager.keyPressed(key);
   }
   onSceneEnter() {
-    console.log(" SceneEnter : Play ");
-    this.zombieManager = new ZombieManager();
+    console.log(" SceneEnter : Tutor ");
+    this.zombieManager = new ZombieManager(true);
     this.zombieManager.generateZombies("play", "english", 0.1);
   }
   onSceneExit() {
-    console.log(" SceneExit : Play ");
+    console.log(" SceneExit : Tutor ");
+    this.zombieManager.keyboard.close();
   }
   update() {
-    //console.log(" Update : Menu ")
     this.zombieManager.update();
   }
 }

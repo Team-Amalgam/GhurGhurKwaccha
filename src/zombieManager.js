@@ -1,8 +1,14 @@
 class ZombieManager {
-  constructor() {
+  constructor(tutorMode = false) {
     this.zombies = [];
     this.zombieToShoot = {};
     this.typedString = "";
+    this.keyboard = new Keyboard("US", currentLanguage);
+    this.zombieLane = 5;
+    if (tutorMode) {
+      setTimeout(() => this.keyboard.open(), 500);
+      this.zombieLane = 3;
+    }
   }
 
   draw() {
@@ -14,20 +20,21 @@ class ZombieManager {
     if (mode == "play" && language == "english") {
       let index = Math.trunc(Math.random() * quotes.length);
       let quote = quotes[index];
+      //let quote = "helllo i am happy";
       let words = quote.split(" ");
       this.zombies = words.map(
         (word, index) =>
           new Zombie(
             windowWidth + index * 100,
-            Math.trunc(Math.random() * 5) * (windowHeight / 5) + 20,
-            // 100 + (index % 5) * 100,
-            // 100 + Math.trunc(index / 5) * 50,
+            Math.trunc(Math.random() * this.zombieLane) * (windowHeight / 5) +
+              20,
             word,
             level * 2 + 1,
             gif_loadImg
           )
       );
     }
+    this.keyboard.glow_dim(this.zombies[0].word[0], this.typedString);
   }
 
   keyPressed(key) {
@@ -46,6 +53,7 @@ class ZombieManager {
             (zombie) => zombie.id != this.zombieToShoot.id
           );
           this.zombieToShoot = {};
+          this.keyboard.glow_dim(this.zombies[0].word[0], this.typedString);
         }
         break;
       default:
@@ -56,6 +64,7 @@ class ZombieManager {
         break;
     }
     this.setZombieToShoot();
+    this.keyboard.glow_dim(this.zombieToShoot.word || "*/*", this.typedString);
   }
 
   setZombieToShoot() {
