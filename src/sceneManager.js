@@ -3,7 +3,7 @@ class SceneManager {
     this.scenes = sceneList.map((scene) => new scene(this));
   }
   enterScene(newSceneName) {
-    if (this.currentScene && this.currentScene.exitScene) {
+    if (this.currentScene && this.currentScene.onSceneExit) {
       this.currentScene.onSceneExit();
     }
     var existingScene = this.getScene(newSceneName);
