@@ -181,13 +181,15 @@ class Keyboard {
     this.eventHandlers.oninput = oninput;
     this.eventHandlers.onclose = onclose;
     this.elements.main.classList.add("keyboard--hidden");
-    console.log(this.elements.main.classList);
   }
   glow(key) {
-    if (key === " ") {
-      this.glow_space();
+    if (!key) {
       return;
     }
+    // if (key === " ") {
+    //   this.glow_space();
+    //   return;
+    // }
     if (key != this.getLowerCase(key)) {
       if (!this.properties.capsLock) {
         this._toggleCapsLock();

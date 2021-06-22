@@ -5,9 +5,15 @@ var currentLanguage = "english";
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
-  var sceneList = [PlayScene, MenuScene, CreditScene, TutorScene];
+  var sceneList = [
+    PlayScene,
+    MenuScene,
+    CreditScene,
+    TutorScene,
+    GameOverScene,
+  ];
   sceneManager = new SceneManager(sceneList);
-  sceneManager.enterScene("tutor");
+  sceneManager.enterScene("menu");
 }
 
 function draw() {
@@ -28,4 +34,7 @@ function preload() {
     loadImage("assets/die1.png"),
   ];
   nepaliFont = loadFont("css/font.otf");
+}
+function mouseClicked() {
+  sceneManager.mouseClicked();
 }

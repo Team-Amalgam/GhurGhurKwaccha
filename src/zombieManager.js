@@ -12,29 +12,26 @@ class ZombieManager {
   }
 
   draw() {
+    if (currentLanguage == "nepali") {
+      textFont(nepaliFont, 30);
+    }
     text(this.typedString, windowWidth / 2, windowHeight / 10);
     this.zombies.forEach((zombie) => zombie.draw());
+    textFont("Georgia", 22);
   }
-
-  generateZombies(mode, language, level) {
-    if (mode == "play" && language == "english") {
-      let index = Math.trunc(Math.random() * quotes.length);
-      let quote = quotes[index];
-      //let quote = "helllo i am happy";
-      let words = quote.split(" ");
-      this.zombies = words.map(
-        (word, index) =>
-          new Zombie(
-            windowWidth + index * 100,
-            Math.trunc(Math.random() * this.zombieLane) * (windowHeight / 5) +
-              20,
-            word,
-            level * 2 + 1,
-            gif_loadImg
-          )
-      );
-    }
-    this.keyboard.glow_dim(this.zombies[0].word[0], this.typedString);
+  generateZombies(words, speed) {
+    words.map((word, index) =>
+      this.zombies.push(
+        new Zombie(
+          windowWidth + index * 150,
+          Math.trunc(Math.random() * this.zombieLane) * (windowHeight / 5) + 20,
+          word,
+          speed,
+          gif_loadImg
+        )
+      )
+    );
+    this.keyboard.glow_dim(this.zombies[0].word, this.typedString);
   }
 
   keyPressed(key) {
@@ -53,7 +50,7 @@ class ZombieManager {
             (zombie) => zombie.id != this.zombieToShoot.id
           );
           this.zombieToShoot = {};
-          this.keyboard.glow_dim(this.zombies[0].word[0], this.typedString);
+          //this.keyboard.glow_dim(this.zombies[0].word[0], "");
         }
         break;
       default:
@@ -64,7 +61,10 @@ class ZombieManager {
         break;
     }
     this.setZombieToShoot();
-    this.keyboard.glow_dim(this.zombieToShoot.word || "*/*", this.typedString);
+    this.keyboard.glow_dim(
+      this.zombieToShoot.word || this.zombies[0].word,
+      this.typedString
+    );
   }
 
   setZombieToShoot() {
@@ -75,6 +75,7 @@ class ZombieManager {
       if (matchingZombie) {
         if (matchingZombie.id !== this.zombieToShoot.id) {
           this.zombieToShoot.isTargeted = false;
+          this.zombieToShoot.correctlyTypedString = "";
           this.zombieToShoot = matchingZombie;
           this.zombieToShoot.isTargeted = true;
         }
