@@ -2,7 +2,7 @@ var sceneManager;
 var gif_loadImg;
 var nepaliFont;
 var currentLanguage = "english";
-
+var keyboard;
 function setup() {
   createCanvas(windowWidth, windowHeight);
   var sceneList = [
@@ -12,6 +12,7 @@ function setup() {
     TutorScene,
     GameOverScene,
   ];
+  keyboard = new Keyboard("US", currentLanguage);
   sceneManager = new SceneManager(sceneList);
   sceneManager.enterScene("menu");
 }

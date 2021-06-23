@@ -72,15 +72,6 @@ class Keyboard {
         case "backspace":
           keyElement.classList.add("keyboard__key--wide");
           keyElement.innerHTML = createIconHTML("backspace");
-
-          keyElement.addEventListener("click", () => {
-            this.properties.value = this.properties.value.substring(
-              0,
-              this.properties.value.length - 1
-            );
-            this._triggerEvent("oninput");
-          });
-
           break;
 
         case "caps":
@@ -89,37 +80,16 @@ class Keyboard {
             "keyboard__key--activatable"
           );
           keyElement.innerHTML = createIconHTML("keyboard_capslock");
-
-          keyElement.addEventListener("click", () => {
-            this._toggleCapsLock();
-            keyElement.classList.toggle(
-              "keyboard__key--active",
-              this.properties.capsLock
-            );
-          });
-
           break;
 
         case "enter":
           keyElement.classList.add("keyboard__key--wide");
           keyElement.innerHTML = createIconHTML("keyboard_return");
-
-          keyElement.addEventListener("click", () => {
-            this.properties.value += "\n";
-            this._triggerEvent("oninput");
-          });
-
           break;
 
         case "space":
           keyElement.classList.add("keyboard__key--extra-wide");
           keyElement.innerHTML = createIconHTML("space_bar");
-
-          keyElement.addEventListener("click", () => {
-            this.properties.value += " ";
-            this._triggerEvent("oninput");
-          });
-
           break;
 
         case "done":
@@ -128,23 +98,10 @@ class Keyboard {
             "keyboard__key--dark"
           );
           keyElement.innerHTML = createIconHTML("check_circle");
-
-          keyElement.addEventListener("click", () => {
-            this.close();
-            this._triggerEvent("onclose");
-          });
-
           break;
 
         default:
           keyElement.textContent = this.getLowerCase(key);
-          keyElement.addEventListener("click", () => {
-            this.properties.value += this.properties.capsLock
-              ? this.getUpperCase(key)
-              : this.getLowerCase(key);
-            this._triggerEvent("oninput");
-          });
-
           break;
       }
       this.fragment.appendChild(keyElement);
@@ -255,9 +212,7 @@ class Keyboard {
     }
   }
   glow_dim(textToType, textTyped) {
-    if (textToType === "*/*") {
-      return;
-    }
+    console.log(textToType, " ", textTyped);
     this.dim_all();
     if (textTyped == "") {
       this.glow(textToType[0]);

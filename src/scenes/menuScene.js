@@ -2,9 +2,9 @@ class MenuScene {
   constructor(sceneManager) {
     this.sceneManager = sceneManager;
     this.sceneName = "menu";
-    this.playModeButton = new Button(windowWidth / 2, 300, "Play Mode");
-    this.tutorModeButton = new Button(windowWidth / 2, 200, "Tutor Mode");
-    this.exitButton = new Button(windowWidth / 2, 400, "Exit");
+    this.playModeButton = new Button("Play Mode", windowWidth / 2, 300);
+    this.tutorModeButton = new Button("Tutor Mode", windowWidth / 2, 200);
+    this.exitButton = new Button("Exit", windowWidth / 2, 400);
   }
   draw() {
     clear();

@@ -1,9 +1,9 @@
 class Button {
-  constructor(xpos, ypos, buttonText) {
+  constructor(buttonText, xpos, ypos, width = 200, height = 50) {
     this.xpos = xpos;
     this.ypos = ypos;
-    this.height = 50;
-    this.width = 200;
+    this.height = height;
+    this.width = width;
     this.buttonText = buttonText;
     this.isHover = false;
     this.mousePressFunction = null;

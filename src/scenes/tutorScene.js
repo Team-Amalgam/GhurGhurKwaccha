@@ -5,39 +5,24 @@ class TutorScene {
     this.zombieToFire;
     this.isLevelSelected = false;
     this.level = 0;
-    this.batchSize = 5;
-    this.threshHold = 2;
+    this.batchSize = 10;
+    this.threshHold = 5;
     this.lastZombieIndex = 0;
     this.totalExerciseWordLength = 0;
     this.levelSelectionButtons = [];
-    var buttons = [
-      "Exercise 1",
-      "Exercise 2",
-      "Exercise 3",
-      "Exercise 4",
-      "Exercise 5",
-      "Exercise 6",
-      "Exercise 7",
-      "Exercise 8",
-      "Exercise 9",
-      "Exercise 10",
-      "Exercise 11",
-      "Exercise 12",
-      "Exercise 13",
-      "Exercise 14",
-      "Exercise 15",
-      "Exercise 16",
-      "Exercise 17",
-      "Exercise 18",
-    ];
+    var buttons = ["Home Key", "Top Key", "Bottom Key", "Number"];
     buttons.map((text, index) => {
-      var button = new Button(
-        400 + (index % 2) * 350,
-        50 + Math.trunc(index / 2) * 75,
-        text
-      );
-      button.callOnMousePress(() => this.startLevel(index));
-      this.levelSelectionButtons.push(button);
+      Object.keys(tutorData[index]).map((a) => {
+        var button = new Button(
+          `${int(a) + 1}`,
+          250 + a * 70,
+          120 + index * 120,
+          50,
+          50
+        );
+        button.callOnMousePress(() => this.startLevel(`${index} ${a}`));
+        this.levelSelectionButtons.push(button);
+      });
     });
   }
 
@@ -45,14 +30,29 @@ class TutorScene {
     clear();
     background(220);
     if (this.isLevelSelected) {
+      textAlign(LEFT);
+      text(
+        `Words Type: ${this.zombieManager.zombiesKillCount}/${this.totalExerciseWordLength}`,
+        50,
+        70
+      );
+      textAlign(CENTER);
       this.zombieManager.draw();
     } else {
+      fill(color("black"));
+      textFont("Georgia", 32);
+      textAlign(LEFT);
+      text("Home Key", 230, 70);
+      text("Top Key", 230, 190);
+      text("Bottom Key", 230, 310);
+      text("Numeric Key", 230, 430);
       this.levelSelectionButtons.map((button) => button.draw());
     }
   }
   generateWords() {
-    let words = tutorData[this.level];
-    this.totalExerciseWordLength = words.length;
+    let levels = this.level.split(" ");
+    let words = tutorData[int(levels[0])][int(levels[1])];
+    this.totalExerciseWordLength = words.split(" ").length;
     words = words.split(" ").filter((word) => word != "");
     words = words.slice(
       this.lastZombieIndex,
@@ -75,8 +75,10 @@ class TutorScene {
     this.isLevelSelected = false;
   }
   onSceneExit() {
+    this.lastZombieIndex = 0;
+    this.totalExerciseWordLength = 0;
     console.log(" SceneExit : Tutor ");
-    this.zombieManager.keyboard.close();
+    keyboard.close();
   }
   startLevel(level) {
     this.zombieManager = new ZombieManager(true);
@@ -93,6 +95,8 @@ class TutorScene {
     }
   }
   mouseClicked() {
-    this.levelSelectionButtons.map((button) => button.mouseClicked());
+    if (!this.isLevelSelected) {
+      this.levelSelectionButtons.map((button) => button.mouseClicked());
+    }
   }
 }

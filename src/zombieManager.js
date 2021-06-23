@@ -3,10 +3,10 @@ class ZombieManager {
     this.zombies = [];
     this.zombieToShoot = {};
     this.typedString = "";
-    this.keyboard = new Keyboard("US", currentLanguage);
     this.zombieLane = 5;
+    this.zombiesKillCount = 0;
     if (tutorMode) {
-      setTimeout(() => this.keyboard.open(), 500);
+      setTimeout(() => keyboard.open(), 500);
       this.zombieLane = 3;
     }
   }
@@ -31,7 +31,7 @@ class ZombieManager {
         )
       )
     );
-    this.keyboard.glow_dim(this.zombies[0].word, this.typedString);
+    keyboard.glow_dim(this.zombies[0].word, this.typedString);
   }
 
   keyPressed(key) {
@@ -49,8 +49,9 @@ class ZombieManager {
           this.zombies = this.zombies.filter(
             (zombie) => zombie.id != this.zombieToShoot.id
           );
+          this.zombiesKillCount += 1;
           this.zombieToShoot = {};
-          //this.keyboard.glow_dim(this.zombies[0].word[0], "");
+          //keyboard.glow_dim(this.zombies[0].word[0], "");
         }
         break;
       default:
@@ -61,7 +62,7 @@ class ZombieManager {
         break;
     }
     this.setZombieToShoot();
-    this.keyboard.glow_dim(
+    keyboard.glow_dim(
       this.zombieToShoot.word || this.zombies[0].word,
       this.typedString
     );
