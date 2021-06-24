@@ -1,7 +1,8 @@
 var sceneManager;
 var gif_loadImg;
 var nepaliFont;
-var currentLanguage = "english";
+var currentLanguage = "nepali";
+//var currentLanguage = "english";
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
