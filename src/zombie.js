@@ -16,7 +16,7 @@ class Zombie {
   }
   draw() {
     fill(color(this.isTargeted ? "orange" : "yellow"));
-    rect(this.xPosition - 2, this.yPosition - 20, 18 * this.word.length, 30);
+    rect(this.xPosition + 5, this.yPosition - 5, 18 * this.word.length, 30);
     fill(color("black"));
     text(
       this.word.substring(this.correctlyTypedString.length),

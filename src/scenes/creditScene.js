@@ -9,13 +9,8 @@ class CreditScene {
     text("Credit Scene", width / 2, 100);
     rect(200, 250, 100, 100);
     rect(200, 400, 100, 100);
-    //console.log(" Draw : Menu ")
   }
-  keyPressed(key) {
-    if (String(key) === "s") {
-      this.sceneManager.enterScene("menu");
-    }
-  }
+
   onSceneEnter() {
     console.log(" SceneEnter : Credit ");
   }
