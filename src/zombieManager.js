@@ -15,6 +15,9 @@ class ZombieManager {
     if (currentLanguage == "nepali") {
       textFont(nepaliFont, 30);
     }
+    else{
+      textFont("Georgia", 22);
+    }
     text(this.typedString, windowWidth / 2, windowHeight / 10);
     this.zombies.forEach((zombie) => zombie.draw());
     textFont("Georgia", 22);

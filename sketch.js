@@ -1,8 +1,11 @@
 var sceneManager;
 var gif_loadImg;
 var nepaliFont;
-var currentLanguage = "nepali";
+var currentLanguage = "english";
 var keyboard;
+var languageFlag;
+var slider;
+
 function setup() {
   createCanvas(windowWidth, windowHeight);
   var sceneList = [
@@ -15,10 +18,25 @@ function setup() {
   keyboard = new Keyboard("US", currentLanguage);
   sceneManager = new SceneManager(sceneList);
   sceneManager.enterScene("menu");
+  slider= createSlider(0,1,0);
+  slider.position(windowWidth-50,50);
+  slider.style('width','30px'); 
 }
 
 function draw() {
   sceneManager.loop();
+  if (sceneManager.currentScene.sceneName==='menu'){
+    if (slider.value()){
+      currentLanguage = "nepali";
+      image(languageFlag[0],windowWidth-45,20,30,30);
+    }
+    else{
+        currentLanguage ="english";
+        image(languageFlag[1],windowWidth-45,30,30,20);
+     }
+
+  }
+
 }
 
 function keyPressed() {
@@ -33,6 +51,10 @@ function preload() {
     loadImage("assets/zm1.png"),
     loadImage("assets/die2.png"),
     loadImage("assets/die1.png"),
+  ];
+  languageFlag =[
+  loadImage('assets/Flag-Nepal.png'),
+  loadImage('assets/America-Flag.png'),
   ];
   nepaliFont = loadFont("css/font.otf");
 }
