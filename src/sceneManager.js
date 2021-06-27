@@ -8,7 +8,7 @@ class SceneManager {
     }
     // else{
     //   slider.show();
-    // }
+    //  }
     if (this.currentScene && this.currentScene.onSceneExit) {
       this.currentScene.onSceneExit();
     }

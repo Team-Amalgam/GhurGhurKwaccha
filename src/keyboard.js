@@ -111,6 +111,21 @@ class Keyboard {
     });
     return this.fragment;
   }
+
+  changeLanguage(language){
+    this.language = language;
+    var keys = document.querySelectorAll("button");
+    for (var i=0; i<keys.length; i++){
+      if (this.language == "english") {
+        keys[i].style.fontFamily =
+          '"Lucida Console", "Courier New", monospace';
+        keys[i].style.fontSize = "20px";
+      } else if (this.language == "nepali") {
+        keys[i].style.fontFamily = "preeti";
+        keys[i].style.fontSize = "40px";
+      }
+    }
+  }
   _triggerEvent(handlerName) {
     if (typeof this.eventHandlers[handlerName] == "function") {
       this.eventHandlers[handlerName](this.properties.value);
