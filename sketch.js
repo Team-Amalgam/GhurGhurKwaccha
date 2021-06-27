@@ -5,6 +5,7 @@ var currentLanguage = "english";
 var keyboard;
 var languageFlag;
 var slider;
+var hover_sound;
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
@@ -21,6 +22,7 @@ function setup() {
   slider= createSlider(0,1,0);
   slider.position(windowWidth-50,50);
   slider.style('width','30px'); 
+  // hover_sound.play();
 }
 
 function draw() {
@@ -57,6 +59,10 @@ function preload() {
   languageFlag =[
   loadImage('assets/Flag-Nepal.png'),
   loadImage('assets/America-Flag.png'),
+  ];
+  soundFormats("mp3");
+  hover_sound =[
+  loadSound("assets/hover_sound.mp3"),
   ];
   nepaliFont = loadFont("css/font.otf");
 }
