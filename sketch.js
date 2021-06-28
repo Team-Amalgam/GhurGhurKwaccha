@@ -5,8 +5,12 @@ var gif_zomb;
 var grass;
 
 var nepaliFont;
-var currentLanguage = "nepali";
+var currentLanguage = "english";
 var keyboard;
+var languageFlag;
+var slider;
+var hover_sound;
+
 function setup() {
   createCanvas(windowWidth, windowHeight);
   var sceneList = [
@@ -19,10 +23,28 @@ function setup() {
   keyboard = new Keyboard("US", currentLanguage);
   sceneManager = new SceneManager(sceneList);
   sceneManager.enterScene("menu");
+  slider= createSlider(0,1,0);
+  slider.position(windowWidth-50,50);
+  slider.style('width','30px'); 
+  // hover_sound.play();
 }
 
 function draw() {
   sceneManager.loop();
+  if (sceneManager.currentScene.sceneName==='menu'){
+    if (slider.value()){
+      currentLanguage = "nepali";
+      keyboard.changeLanguage("nepali");
+      image(languageFlag[0],windowWidth-45,20,30,30);
+    }
+    else{
+        currentLanguage ="english";
+        keyboard.changeLanguage("english");
+        image(languageFlag[1],windowWidth-45,30,30,20);
+     }
+
+  }
+
 }
 function keyPressed() {
   sceneManager.keyPressed(key);
@@ -55,6 +77,14 @@ function preload() {
   gif_zomb[2][2]=loadAnimatedSprite(11,"assets/Zombies/Z03/Attacking/Attacking_0","0")
 
 
+  languageFlag =[
+  loadImage('assets/Flag-Nepal.png'),
+  loadImage('assets/America-Flag.png'),
+  ];
+  soundFormats("mp3");
+  hover_sound =[
+  loadSound("assets/hover_sound.mp3"),
+  ];
   nepaliFont = loadFont("css/font.otf");
 }
 function mouseClicked() {
