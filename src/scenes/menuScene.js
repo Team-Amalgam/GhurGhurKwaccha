@@ -8,7 +8,7 @@ class MenuScene {
   }
   draw() {
     clear();
-    background(44, 142, 153);
+    background(grass); 
     this.playModeButton.draw();
     this.tutorModeButton.draw();
     this.exitButton.draw();

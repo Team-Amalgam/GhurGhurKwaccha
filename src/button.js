@@ -15,10 +15,10 @@ class Button {
   draw() {
     this.isHover = this.hover();
     if (this.isHover) {
-      fill(129, 182, 34);
+      fill(129, 182, 34, 128);
     } else {
       this.isHover = false;
-      fill(89, 152, 26);
+      fill(6, 26, 64, 200);
     }
     rectMode(CENTER);
     rect(this.xpos, this.ypos, this.width, this.height, 60);

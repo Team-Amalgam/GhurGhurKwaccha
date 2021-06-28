@@ -9,47 +9,34 @@ class Zombie {
     this.isVisible = false;
     this.speed = speed;
     this.isTargeted = false;
-    this.skin = skin;
+    this.instance=Math.floor(Math.random()*3)
+    this.skin = [new AnimatedSprite(skin[0]),
+                new AnimatedSprite(skin[1]),
+                new AnimatedSprite(skin[2])]; //AnimatedSprite Array
     this.toogle = false;
     this.i = 0;
     Zombie.count++;
   }
   draw() {
-    fill(color(this.isTargeted ? "orange" : "yellow"));
-    rect(this.xPosition + 5, this.yPosition - 5, 18 * this.word.length, 30);
-    fill(color("black"));
-    text(
-      this.word.substring(this.correctlyTypedString.length),
-      this.xPosition + 5,
-      this.yPosition - 10 + 10
-    );
-    //text(this.correctlyTypedString, this.xPosition, this.yPosition - 10);
-    this.drawImage();
+    if (this.isAlive) {
+      rectMode(CENTER);
+      fill(color(this.isTargeted ? "orange" : "yellow"));
+      rect(this.xPosition + 5, this.yPosition - 5, 18 * this.word.length, 30);
+      fill(color("black"));
+      text(
+        this.word.substring(this.correctlyTypedString.length),
+        this.xPosition + 5,
+        this.yPosition - 10 + 10
+      );
+      this.skin[this.instance].drawImage(this.xPosition-20, this.yPosition)
+    } else {
+    }
   }
   update() {
     if (this.xPosition > windowWidth * 0.2) {
       this.xPosition -= this.speed;
     }
-  }
-  drawImage() {
-    if (this.isAlive) {
-      if (!this.toogle) {
-        image(this.skin[0], this.xPosition, this.yPosition);
-        this.i++;
-        if (this.i % 20 == 0) {
-          this.toogle = true;
-          this.i = 0;
-        }
-      } else {
-        image(this.skin[1], this.xPosition, this.yPosition);
-        this.i++;
-        if (this.i % 20 == 0) {
-          this.i = 0;
-          this.toogle = false;
-        }
-      }
-    } else {
-    }
+    // this.skin[0].update();
   }
   static count = 0;
 }

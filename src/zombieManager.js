@@ -27,7 +27,7 @@ class ZombieManager {
           Math.trunc(Math.random() * this.zombieLane) * (windowHeight / 5) + 20,
           word,
           speed,
-          gif_loadImg
+          gif_zomb[Math.floor(Math.random()*3)]
         )
       )
     );

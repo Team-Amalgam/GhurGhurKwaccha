@@ -24,13 +24,17 @@ class TutorScene {
         this.levelSelectionButtons.push(button);
       });
     });
+    this.backButton = new Button("Back",windowWidth/10,2*windowHeight/10);
   }
 
   draw() {
     clear();
-    background(220);
+    background(grass);
+    // background(220);
     if (this.isLevelSelected) {
       textAlign(LEFT);
+      fill(color("white"));
+      textFont("Georgia", 32);
       text(
         `Words Type: ${this.zombieManager.zombiesKillCount}/${this.totalExerciseWordLength}`,
         50,
@@ -38,8 +42,9 @@ class TutorScene {
       );
       textAlign(CENTER);
       this.zombieManager.draw();
+      this.backButton.draw();
     } else {
-      fill(color("black"));
+      fill(color("white"));
       textFont("Georgia", 32);
       textAlign(LEFT);
       text("Home Key", 230, 70);
@@ -73,6 +78,9 @@ class TutorScene {
   onSceneEnter() {
     console.log(" SceneEnter : Tutor ");
     this.isLevelSelected = false;
+    this.backButton.callOnMousePress(() =>
+      this.sceneManager.enterScene("menu")
+    );
   }
   onSceneExit() {
     this.lastZombieIndex = 0;
@@ -97,6 +105,8 @@ class TutorScene {
   mouseClicked() {
     if (!this.isLevelSelected) {
       this.levelSelectionButtons.map((button) => button.mouseClicked());
+    } else {
+      this.backButton.mouseClicked();
     }
   }
 }
