@@ -29,10 +29,10 @@ function windowResized() {
 }
 function preload() {
   gif_loadImg = [
-    loadImage("assets/zm.png"),
-    loadImage("assets/zm1.png"),
-    loadImage("assets/die2.png"),
-    loadImage("assets/die1.png"),
+    loadImage("assets/Zombies/Z01/Walking/Walking_000.png"),
+    loadImage("assets/Zombies/Z01/Walking/Walking_001.png"),
+    loadImage("assets/Zombies/Z01/Dying/Dying_000.png"),
+    loadImage("assets/Zombies/Z01/Dying/Dying_001.png"),
   ];
   nepaliFont = loadFont("css/font.otf");
 }
