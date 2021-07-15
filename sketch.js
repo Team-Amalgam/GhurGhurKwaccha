@@ -87,7 +87,7 @@ function preload() {
   loadSound("assets/Sounds/hover_sound.mp3"),
   ];
   deathSounds=[];
-  for(var i=0; i<=8; i++) {
+  for(var i=0; i<=9; i++) {
       deathSounds.push( loadSound(`assets/Sounds/Death/deathSound${i}.mp3`));
   }
   nepaliFont = loadFont("css/font.otf");
