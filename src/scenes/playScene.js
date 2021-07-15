@@ -33,7 +33,7 @@ class PlayScene {
     this.zombieManager = new ZombieManager();
     this.backButton.callOnMousePress(() =>
       this.sceneManager.enterScene("menu")
-    );
+    );    
   }
   onSceneExit() {
     console.log(" SceneExit : Play ");

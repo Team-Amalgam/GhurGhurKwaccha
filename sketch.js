@@ -10,6 +10,7 @@ var keyboard;
 var languageFlag;
 var slider;
 var hover_sound;
+var deathSounds;
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
@@ -25,7 +26,7 @@ function setup() {
   sceneManager.enterScene("menu");
   slider= createSlider(0,1,0);
   slider.position(windowWidth-50,50);
-  slider.style('width','30px'); 
+  slider.style('width','30px');
   // hover_sound.play();
 }
 
@@ -83,8 +84,12 @@ function preload() {
   ];
   soundFormats("mp3");
   hover_sound =[
-  loadSound("assets/hover_sound.mp3"),
+  loadSound("assets/Sounds/hover_sound.mp3"),
   ];
+  deathSounds=[];
+  for(var i=0; i<=8; i++) {
+      deathSounds.push( loadSound(`assets/Sounds/Death/deathSound${i}.mp3`));
+  }
   nepaliFont = loadFont("css/font.otf");
 }
 function mouseClicked() {

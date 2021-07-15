@@ -1,6 +1,7 @@
 class ZombieManager {
   constructor(tutorMode = false) {
     this.zombies = [];
+    this.deadZombies = [];
     this.zombieToShoot = {};
     this.typedString = "";
     this.zombieLane = 5;
@@ -20,6 +21,7 @@ class ZombieManager {
     }
     text(this.typedString, windowWidth / 2, windowHeight / 10);
     this.zombies.forEach((zombie) => zombie.draw());
+    this.deadZombies.forEach((zombie) => zombie.draw());
     textFont("Georgia", 22);
   }
   generateZombies(words, speed) {
@@ -49,6 +51,14 @@ class ZombieManager {
           this.typedString === this.zombieToShoot.word
         ) {
           this.typedString = "";
+          this.zombies.forEach((zombie) => {
+            if(zombie.id == this.zombieToShoot.id){
+              zombie.isAlive=false;
+              zombie.deathSound.play();
+              setTimeout (()=>zombie.deathSound.stop(),3000);
+              this.deadZombies.push(zombie);
+            }
+          });
           this.zombies = this.zombies.filter(
             (zombie) => zombie.id != this.zombieToShoot.id
           );

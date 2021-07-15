@@ -25,6 +25,7 @@ class TutorScene {
       });
     });
     this.backButton = new Button("Back",windowWidth/10,2*windowHeight/10);
+    this.backButton2 = new Button("Back",windowWidth/2,8*windowHeight/10);
   }
 
   draw() {
@@ -52,6 +53,7 @@ class TutorScene {
       text("Bottom Key", 230, 310);
       text("Numeric Key", 230, 430);
       this.levelSelectionButtons.map((button) => button.draw());
+      this.backButton2.draw();
     }
   }
   generateWords() {
@@ -81,6 +83,9 @@ class TutorScene {
     this.backButton.callOnMousePress(() =>
       this.sceneManager.enterScene("menu")
     );
+    this.backButton2.callOnMousePress(() =>
+      this.sceneManager.enterScene("menu")
+    );
   }
   onSceneExit() {
     this.lastZombieIndex = 0;
@@ -105,6 +110,7 @@ class TutorScene {
   mouseClicked() {
     if (!this.isLevelSelected) {
       this.levelSelectionButtons.map((button) => button.mouseClicked());
+      this.backButton2.mouseClicked();
     } else {
       this.backButton.mouseClicked();
     }
