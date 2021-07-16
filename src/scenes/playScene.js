@@ -5,7 +5,7 @@ class PlayScene {
     this.zombieToFire;
     this.batchSize = 15;
     this.threshold = 5;
-    this.backButton = new Button("Back",windowWidth/10,2*windowHeight/10);
+    this.backButton = new Button("Back",windowWidth/10,windowHeight/10);
   }
 
   draw() {
@@ -33,7 +33,7 @@ class PlayScene {
     this.zombieManager = new ZombieManager();
     this.backButton.callOnMousePress(() =>
       this.sceneManager.enterScene("menu")
-    );    
+    );
   }
   onSceneExit() {
     console.log(" SceneExit : Play ");

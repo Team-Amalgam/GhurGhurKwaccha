@@ -24,7 +24,7 @@ class TutorScene {
         this.levelSelectionButtons.push(button);
       });
     });
-    this.backButton = new Button("Back",windowWidth/10,2*windowHeight/10);
+    this.backButton = new Button("Back",windowWidth/10,windowHeight*.15);
     this.backButton2 = new Button("Back",windowWidth/2,8*windowHeight/10);
   }
 

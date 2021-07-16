@@ -24,7 +24,17 @@ class ZombieManager {
     else{
       textFont("Georgia", 22);
     }
-    text(this.typedString, windowWidth / 2, windowHeight / 10);
+    //Draw Text Buffer
+    rectMode(CENTER);
+    fill(24, 78, 119, 200);
+    rect(this.player.xPosition + windowWidth * 0.05,
+    this.player.yPosition - windowHeight *0.06,
+    16 * this.typedString.length, 30);
+    fill(color("white"));
+    text(this.typedString,
+      this.player.xPosition + windowWidth * 0.05,
+      this.player.yPosition - windowHeight *0.05);
+
     this.player.draw();
     this.zombies.forEach((zombie) => zombie.draw());
     this.deadZombies.forEach((zombie) => zombie.draw());

@@ -21,6 +21,7 @@ class AnimatedSprite {
   }
   drawRandomImageOnce(xPosition=0, yPosition=0, player){
     image(this.gifs[Math.floor(this.randomCounter)], xPosition, yPosition);
+    // image(this.gifs[Math.floor(this.randomCounter)], xPosition, yPosition+10*Math.sin(3.14*this.randomCounter/this.leng));
     if(this.randomCounter<this.leng-1){
       this.randomCounter+=this.speed
     } else {
