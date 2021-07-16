@@ -2,6 +2,9 @@ var sceneManager;
 
 //Zombies [0, 1 ,2] [0=Walking 1=Dying 2=Attacking]
 var gif_zomb;
+//Player [0, 1, 2, 3] [Blinking, Dying, Idle, Throwing]
+var gif_player;
+var platform;
 var grass;
 
 var nepaliFont;
@@ -43,9 +46,7 @@ function draw() {
         keyboard.changeLanguage("english");
         image(languageFlag[1],windowWidth-45,30,30,20);
      }
-
   }
-
 }
 function keyPressed() {
   sceneManager.keyPressed(key);
@@ -55,10 +56,17 @@ function windowResized() {
 }
 function preload() {
   grass=loadImage("assets/Game Objects/grass.png")
+  platform=loadImage("assets/Game Objects/Platform/platform.png")
   gif_zomb=[]
+  gif_player=[]
+
+  //Player [0, 1, 2, 3] [Blinking, Dying, Idle, Throwing]
+  gif_player[0]=loadAnimatedSprite(17,"assets/Player/Blinking/Idle Blinking_0","0");
+  gif_player[1]=loadAnimatedSprite(14,"assets/Player/Dying/Dying_0","0");
+  gif_player[2]=loadAnimatedSprite(17,"assets/Player/Idle/Idle_0","0");
+  gif_player[3]=loadAnimatedSprite(11,"assets/Player/Throwing/Throwing_0","0");
 
   //Zombies [0, 1 ,2] [0=Walking 1=Dying 2=Attacking]
-
   //Zomb1
   gif_zomb[0]=[]
   gif_zomb[0][0]=loadAnimatedSprite(17,"assets/Zombies/Z01/Walking/Walking_0","0")
@@ -98,7 +106,7 @@ function mouseClicked() {
 function loadAnimatedSprite(count,preFilename, extra=""){
   var spriteList=[]
   for(var i=0; i<=count; i++) {
-    if(i<10){
+    if(i<10) {
       spriteList.push( loadImage(`${preFilename}${extra}${i}.png`))
     }
     else {

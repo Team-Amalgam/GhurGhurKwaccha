@@ -1,6 +1,11 @@
 class ZombieManager {
   constructor(tutorMode = false) {
     this.zombies = [];
+    this.player= new Player(
+      windowWidth/20,
+      windowHeight/3,
+      gif_player
+    );
     this.deadZombies = [];
     this.zombieToShoot = {};
     this.typedString = "";
@@ -20,6 +25,7 @@ class ZombieManager {
       textFont("Georgia", 22);
     }
     text(this.typedString, windowWidth / 2, windowHeight / 10);
+    this.player.draw();
     this.zombies.forEach((zombie) => zombie.draw());
     this.deadZombies.forEach((zombie) => zombie.draw());
     textFont("Georgia", 22);
@@ -36,6 +42,7 @@ class ZombieManager {
         )
       )
     );
+
     keyboard.glow_dim(this.zombies[0].word, this.typedString);
   }
 
@@ -51,6 +58,7 @@ class ZombieManager {
           this.typedString === this.zombieToShoot.word
         ) {
           this.typedString = "";
+          //shooting
           this.zombies.forEach((zombie) => {
             if(zombie.id == this.zombieToShoot.id){
               zombie.isAlive=false;
@@ -109,5 +117,6 @@ class ZombieManager {
 
   update() {
     this.zombies.forEach((zombie) => zombie.update());
+    this.player.update();
   }
 }

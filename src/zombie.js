@@ -31,9 +31,9 @@ class Zombie {
         this.xPosition + 5,
         this.yPosition - 10 + 10
       );
-      this.skin[this.instance].drawImage(this.xPosition-20, this.yPosition)
+      this.skin[this.instance].drawImageLoop(this.xPosition-20, this.yPosition)
     } else {
-      this.skin[1].drawDeadImage(this.xPosition-20, this.yPosition)
+      this.skin[1].drawImageOnce(this.xPosition-20, this.yPosition)
     }
   }
   update() {
