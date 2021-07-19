@@ -5,7 +5,7 @@ class PlayScene {
     this.zombieToFire;
     this.batchSize = 15;
     this.threshold = 5;
-    this.backButton = new Button("Back",windowWidth/10,windowHeight/10);
+    this.backButton = new Button("Back", windowWidth / 10, windowHeight / 10);
   }
 
   draw() {
@@ -23,7 +23,7 @@ class PlayScene {
     if (words.length > this.batchSize) {
       words = words.slice(0, this.batchSize);
     }
-    this.zombieManager.generateZombies(words, 1.2);
+    this.zombieManager.generateZombies(words, 150);
   }
   keyPressed(key) {
     this.zombieManager.keyPressed(key);
@@ -44,7 +44,7 @@ class PlayScene {
       this.generateWords();
     }
   }
-  mouseClicked(){
+  mouseClicked() {
     this.backButton.mouseClicked();
   }
 }
