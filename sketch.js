@@ -65,7 +65,7 @@ function preload() {
   platform = loadImage("assets/Game Objects/Platform/platform.png");
   //Bomb
   bomb_img = [];
-  bomb_img[0] = loadImage("assets/Game Objects/grass.png");
+  bomb_img[0] = loadImage("assets/Game Objects/bomb.png");
   bomb_img[1] = loadImage("assets/Game Objects/Projectile.png");
   gif_zomb = [];
   gif_player = [];
