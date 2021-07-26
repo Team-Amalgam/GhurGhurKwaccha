@@ -19,6 +19,8 @@ var deathSounds;
 
 var bulletHitTime = 2;
 
+var keyboardAnalytics;
+
 function setup() {
   createCanvas(windowWidth, windowHeight);
   var sceneList = [
@@ -30,6 +32,7 @@ function setup() {
     GameOverTutorScene,
     LevelCompleteScene,
   ];
+  keyboardAnalytics = new KeyboardAnalytics();
   keyboard = new Keyboard("US", currentLanguage);
   sceneManager = new SceneManager(sceneList);
   sceneManager.enterScene("menu");
@@ -57,8 +60,12 @@ function draw() {
 }
 function keyPressed() {
   sceneManager.keyPressed(key);
+  hover_sound[0].play();
+  setTimeout(() => hover_sound[0].stop(), 200);
 }
-
+function keyTyped() {
+  keyboardAnalytics.setTypedKey(key);
+}
 function windowResized() {
   resizeCanvas(windowWidth, windowHeight);
 }
@@ -148,7 +155,7 @@ function preload() {
   soundFormats("mp3");
   hover_sound = [loadSound("assets/Sounds/hover_sound.mp3")];
   deathSounds = [];
-  for (var i = 0; i <= 9; i++) {
+  for (var i = 0; i <= 2; i++) {
     deathSounds.push(loadSound(`assets/Sounds/Death/deathSound${i}.mp3`));
   }
   nepaliFont = loadFont("css/font.otf");

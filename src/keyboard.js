@@ -112,13 +112,12 @@ class Keyboard {
     return this.fragment;
   }
 
-  changeLanguage(language){
+  changeLanguage(language) {
     this.language = language;
     var keys = document.querySelectorAll("button");
-    for (var i=0; i<keys.length; i++){
+    for (var i = 0; i < keys.length; i++) {
       if (this.language == "english") {
-        keys[i].style.fontFamily =
-          '"Lucida Console", "Courier New", monospace';
+        keys[i].style.fontFamily = '"Lucida Console", "Courier New", monospace';
         keys[i].style.fontSize = "20px";
       } else if (this.language == "nepali") {
         keys[i].style.fontFamily = "preeti";
@@ -227,7 +226,6 @@ class Keyboard {
     }
   }
   glow_dim(textToType, textTyped) {
-    console.log(textToType, " ", textTyped);
     this.dim_all();
     if (textTyped == "") {
       this.glow(textToType[0]);

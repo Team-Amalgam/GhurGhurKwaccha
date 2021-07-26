@@ -11,7 +11,7 @@ class ZombieManager {
       setTimeout(() => keyboard.open(), 500);
       this.zombieLane = 3;
     }
-    this.bombs = [];
+    this.bombs = []; //calculate total number of typeable key strokes
   }
 
   draw() {
@@ -76,6 +76,8 @@ class ZombieManager {
           this.zombieToShoot &&
           this.typedString === this.zombieToShoot.word
         ) {
+          keyboardAnalytics.setCorrectlyTypedWords(this.zombieToShoot.word);
+          // keyboardAnalytics.correctlyTypedWords.push(this.zombieToShoot.word);
           this.typedString = "";
           var newBomb = new Bomb(this.player, this.zombieToShoot);
           this.bombs.push(newBomb);
@@ -117,6 +119,9 @@ class ZombieManager {
   }
 
   setZombieToShoot() {
+    if (keyboardAnalytics.startTime === null) {
+      keyboardAnalytics.setStartTime();
+    }
     if (this.typedString.length > 0) {
       let matchingZombie = this.zombies.find(
         (zombie) => zombie.word.startsWith(this.typedString) && !zombie.isDying

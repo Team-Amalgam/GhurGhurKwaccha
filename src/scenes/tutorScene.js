@@ -70,7 +70,7 @@ class TutorScene {
       this.lastZombieIndex + this.batchSize
     );
     this.lastZombieIndex += words.length;
-    this.zombieManager.generateZombies(words, 150);
+    this.zombieManager.generateZombies(words, 120);
   }
   keyPressed(key) {
     if (String(key) === " ") {
@@ -82,6 +82,7 @@ class TutorScene {
     this.zombieManager.keyPressed(key);
   }
   onSceneEnter() {
+    keyboardAnalytics.reset();
     console.log(" SceneEnter : Tutor ");
     this.isLevelSelected = false;
     this.backButton.callOnMousePress(() =>

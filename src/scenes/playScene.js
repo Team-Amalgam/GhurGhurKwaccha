@@ -23,12 +23,13 @@ class PlayScene {
     if (words.length > this.batchSize) {
       words = words.slice(0, this.batchSize);
     }
-    this.zombieManager.generateZombies(words, 150);
+    this.zombieManager.generateZombies(words, 180);
   }
   keyPressed(key) {
     this.zombieManager.keyPressed(key);
   }
   onSceneEnter() {
+    keyboardAnalytics.reset();
     console.log(" SceneEnter : Play ");
     this.zombieManager = new ZombieManager();
     this.backButton.callOnMousePress(() =>

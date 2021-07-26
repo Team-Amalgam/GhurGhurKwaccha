@@ -17,6 +17,7 @@ class GameOverTutorScene {
     this.button.mouseClicked();
   }
   onSceneEnter() {
+    keyboardAnalytics.calculate();
     console.log(" SceneEnter : Game Over ");
   }
   onSceneExit() {

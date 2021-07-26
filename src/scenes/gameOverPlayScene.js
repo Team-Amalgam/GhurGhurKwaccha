@@ -9,14 +9,15 @@ class GameOverPlayScene {
     clear();
     // background(220);
     background(grass);
-    fill(color("black"));
-    text("Try More", width / 2, height / 2);
+    keyboardAnalytics.displayAnalytics(width / 2, height / 2);
+
     this.button.draw();
   }
   mouseClicked() {
     this.button.mouseClicked();
   }
   onSceneEnter() {
+    keyboardAnalytics.calculate();
     console.log(" SceneEnter : Game Over ");
   }
   onSceneExit() {
