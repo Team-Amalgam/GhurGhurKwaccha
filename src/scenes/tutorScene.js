@@ -24,8 +24,12 @@ class TutorScene {
         this.levelSelectionButtons.push(button);
       });
     });
-    this.backButton = new Button("Back",windowWidth/10,windowHeight*.15);
-    this.backButton2 = new Button("Back",windowWidth/2,8*windowHeight/10);
+    this.backButton = new Button("Back", windowWidth / 10, windowHeight * 0.15);
+    this.backButton2 = new Button(
+      "Back",
+      windowWidth / 2,
+      (8 * windowHeight) / 10
+    );
   }
 
   draw() {
@@ -66,7 +70,7 @@ class TutorScene {
       this.lastZombieIndex + this.batchSize
     );
     this.lastZombieIndex += words.length;
-    this.zombieManager.generateZombies(words, 2);
+    this.zombieManager.generateZombies(words, 150);
   }
   keyPressed(key) {
     if (String(key) === " ") {

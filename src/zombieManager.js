@@ -1,11 +1,7 @@
 class ZombieManager {
   constructor(tutorMode = false) {
     this.zombies = [];
-    this.player= new Player(
-      windowWidth/20,
-      windowHeight/3,
-      gif_player
-    );
+    this.player = new Player(windowWidth / 20, windowHeight / 3, gif_player);
     this.deadZombies = [];
     this.zombieToShoot = {};
     this.typedString = "";
@@ -15,29 +11,36 @@ class ZombieManager {
       setTimeout(() => keyboard.open(), 500);
       this.zombieLane = 3;
     }
+    this.bombs = [];
   }
 
   draw() {
     if (currentLanguage == "nepali") {
       textFont(nepaliFont, 30);
-    }
-    else{
+    } else {
       textFont("Georgia", 22);
     }
     //Draw Text Buffer
     rectMode(CENTER);
     fill(24, 78, 119, 200);
-    rect(this.player.xPosition + windowWidth * 0.05,
-    this.player.yPosition - windowHeight *0.06,
-    16 * this.typedString.length, 30);
-    fill(color("white"));
-    text(this.typedString,
+    rect(
       this.player.xPosition + windowWidth * 0.05,
-      this.player.yPosition - windowHeight *0.05);
+      this.player.yPosition - windowHeight * 0.06,
+      16 * this.typedString.length,
+      30
+    );
+    fill(color("white"));
+    text(
+      this.typedString,
+      this.player.xPosition + windowWidth * 0.05,
+      this.player.yPosition - windowHeight * 0.05
+    );
 
     this.player.draw();
+    // this.bombs.drawBomb();
     this.zombies.forEach((zombie) => zombie.draw());
     this.deadZombies.forEach((zombie) => zombie.draw());
+    this.bombs.forEach((bomb) => bomb.drawBomb());
     textFont("Georgia", 22);
   }
   generateZombies(words, speed) {
@@ -48,7 +51,7 @@ class ZombieManager {
           Math.trunc(Math.random() * this.zombieLane) * (windowHeight / 5) + 20,
           word,
           speed,
-          gif_zomb[Math.floor(Math.random()*3)]
+          gif_zomb[Math.floor(Math.random() * 3)]
         )
       )
     );
@@ -68,20 +71,23 @@ class ZombieManager {
           this.typedString === this.zombieToShoot.word
         ) {
           this.typedString = "";
-          //shooting
-          this.zombies.forEach((zombie) => {
-            if(zombie.id == this.zombieToShoot.id){
-              zombie.isAlive=false;
-              zombie.deathSound.play();
-              setTimeout (()=>zombie.deathSound.stop(),3000);
-              this.deadZombies.push(zombie);
-            }
-          });
-          this.zombies = this.zombies.filter(
-            (zombie) => zombie.id != this.zombieToShoot.id
-          );
+          this.bombs.push(new Bomb(this.player, this.zombieToShoot));
+          this.zombieToShoot.chetVayo(this.deadZombies);
+          this.deadZombies.push(this.zombieToShoot);
+          this.player.instance = 3;
+          // this.zombies = this.zombies.filter(
+          //   (zombie) => zombie.id != this.zombieToShoot.id
+          // );
           this.zombiesKillCount += 1;
           this.zombieToShoot = {};
+          setTimeout(
+            () =>
+              (this.zombies = this.zombies.filter((zombie) => zombie.isAlive)),
+            bulletHitTime * 1000
+          );
+
+          //shooting
+
           //keyboard.glow_dim(this.zombies[0].word[0], "");
         }
         break;
@@ -101,8 +107,8 @@ class ZombieManager {
 
   setZombieToShoot() {
     if (this.typedString.length > 0) {
-      let matchingZombie = this.zombies.find((zombie) =>
-        zombie.word.startsWith(this.typedString)
+      let matchingZombie = this.zombies.find(
+        (zombie) => zombie.word.startsWith(this.typedString) && !zombie.isDying
       );
       if (matchingZombie) {
         if (matchingZombie.id !== this.zombieToShoot.id) {
@@ -127,6 +133,9 @@ class ZombieManager {
 
   update() {
     this.zombies.forEach((zombie) => zombie.update());
+    // this.deadZombies.forEach((zombie) => zombie.update());
+    this.bombs = this.bombs.filter((bomb) => bomb.exploded === false);
+    this.bombs.forEach((bomb) => bomb.updateBomb());
     this.player.update();
   }
 }

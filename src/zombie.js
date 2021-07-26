@@ -9,16 +9,31 @@ class Zombie {
     this.isVisible = false;
     this.speed = speed;
     this.isTargeted = false;
-    this.deathSound=deathSounds[Math.floor(Math.random()*deathSounds.length)];
+    this.deathSound =
+      deathSounds[Math.floor(Math.random() * deathSounds.length)];
     // this.instance=Math.floor(Math.random()*3);
-    this.instance=0;
+    this.instance = 0;
     //Zombies [0, 1 ,2] [0=Walking 1=Dying 2=Attacking]
-    this.skin = [new AnimatedSprite(skin[0]),
-                new AnimatedSprite(skin[1]),
-                new AnimatedSprite(skin[2])]; //AnimatedSprite Array
-    this.toogle = false;
-    this.i = 0;
+    this.skin = [
+      new AnimatedSprite(skin[0]),
+      new AnimatedSprite(skin[1]),
+      new AnimatedSprite(skin[2]),
+    ]; //AnimatedSprite Array
+    this.hitPoints = 1;
     Zombie.count++;
+    this.isDying = false; //marnu agadi last saans ferirya xa
+  }
+  attack() {
+    this.instance = 2;
+    sceneManager.currentScene.zombieManager.player.bulletHit(this.hitPoints);
+  }
+  chetVayo() {
+    this.isDying = true;
+    setTimeout(() => {
+      this.isAlive = false;
+      this.deathSound.play();
+      setTimeout(() => this.deathSound.stop(), 3000);
+    }, bulletHitTime * 1000);
   }
   draw() {
     if (this.isAlive) {
@@ -31,18 +46,22 @@ class Zombie {
         this.xPosition + 5,
         this.yPosition - 10 + 10
       );
-      this.skin[this.instance].drawImageLoop(this.xPosition-20, this.yPosition)
+      this.skin[this.instance].drawImageLoop(
+        this.xPosition - 20,
+        this.yPosition
+      );
     } else {
-      this.skin[1].drawImageOnce(this.xPosition-20, this.yPosition)
+      this.skin[1].drawImageOnce(this.xPosition - 20, this.yPosition);
     }
   }
   update() {
     if (this.xPosition > windowWidth * 0.2) {
-      this.xPosition -= this.speed;
+      this.xPosition -= this.speed * deltaTimeInSeconds;
     } else {
-      this.instance=2;
+      this.attack();
     }
     // this.skin[0].update();
   }
+
   static count = 0;
 }
