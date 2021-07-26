@@ -26,7 +26,9 @@ function setup() {
     MenuScene,
     CreditScene,
     TutorScene,
-    GameOverScene,
+    GameOverPlayScene,
+    GameOverTutorScene,
+    LevelCompleteScene,
   ];
   keyboard = new Keyboard("US", currentLanguage);
   sceneManager = new SceneManager(sceneList);

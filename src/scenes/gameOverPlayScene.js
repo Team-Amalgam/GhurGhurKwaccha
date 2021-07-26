@@ -1,16 +1,16 @@
-class GameOverScene {
+class GameOverPlayScene {
   constructor(sceneManager) {
     this.sceneManager = sceneManager;
-    this.sceneName = "gameOver";
+    this.sceneName = "gameOverPlay";
     this.button = new Button("Continue", width / 2, height / 2 - 50);
-    this.button.callOnMousePress(() => this.sceneManager.enterScene("tutor"));
+    this.button.callOnMousePress(() => this.sceneManager.enterScene("menu"));
   }
   draw() {
     clear();
     // background(220);
-    background(grass);  
+    background(grass);
     fill(color("black"));
-    text("Congratulations!! Exercise complete", width / 2, height / 2);
+    text("Try More", width / 2, height / 2);
     this.button.draw();
   }
   mouseClicked() {

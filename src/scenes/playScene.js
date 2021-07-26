@@ -43,6 +43,9 @@ class PlayScene {
     if (this.zombieManager.zombies.length < this.threshold) {
       this.generateWords();
     }
+    if (this.zombieManager.player.health < 0) {
+      this.sceneManager.enterScene("gameOverPlay");
+    }
   }
   mouseClicked() {
     this.backButton.mouseClicked();

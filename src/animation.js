@@ -32,7 +32,6 @@ class AnimatedSprite {
       this.randomCounter = 0;
       if (player.instance == 1) {
         //gameover logic
-        noLoop();
       }
       player.instance = 0;
       //player.instance=Math.floor(Math.random()*4);

@@ -38,8 +38,14 @@ class ZombieManager {
 
     this.player.draw();
     // this.bombs.drawBomb();
-    this.zombies.forEach((zombie) => zombie.draw());
     this.deadZombies.forEach((zombie) => zombie.draw());
+    for (var i = this.zombies.length - 1; i >= 0; i--) {
+      this.zombies[i].draw();
+    }
+    // this.zombies.forEach((zombie) => zombie.draw());
+    if (typeof this.zombieToShoot.draw === "function") {
+      this.zombieToShoot.draw();
+    }
     this.bombs.forEach((bomb) => bomb.drawBomb());
     textFont("Georgia", 22);
   }
@@ -71,8 +77,10 @@ class ZombieManager {
           this.typedString === this.zombieToShoot.word
         ) {
           this.typedString = "";
-          this.bombs.push(new Bomb(this.player, this.zombieToShoot));
-          this.zombieToShoot.chetVayo(this.deadZombies);
+          var newBomb = new Bomb(this.player, this.zombieToShoot);
+          this.bombs.push(newBomb);
+          this.zombieToShoot.showWordBox = false;
+          this.zombieToShoot.chetVayo(newBomb.bulletTime);
           this.deadZombies.push(this.zombieToShoot);
           this.player.instance = 3;
           if (this.deadZombies.length > 4) {
@@ -86,7 +94,7 @@ class ZombieManager {
           setTimeout(
             () =>
               (this.zombies = this.zombies.filter((zombie) => zombie.isAlive)),
-            bulletHitTime * 1000
+            newBomb.bulletTime * 1000
           );
 
           //shooting

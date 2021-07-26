@@ -22,30 +22,34 @@ class Zombie {
     this.hitPoints = 1;
     Zombie.count++;
     this.isDying = false; //marnu agadi last saans ferirya xa
+    this.showWordBox = true;
   }
   attack() {
     this.instance = 2;
     sceneManager.currentScene.zombieManager.player.bulletHit(this.hitPoints);
   }
-  chetVayo() {
+  chetVayo(bulletTime) {
     this.isDying = true;
     setTimeout(() => {
       this.isAlive = false;
       this.deathSound.play();
       setTimeout(() => this.deathSound.stop(), 3000);
-    }, bulletHitTime * 1000);
+    }, bulletTime * 1000);
   }
   draw() {
     if (this.isAlive) {
-      rectMode(CENTER);
-      fill(color(this.isTargeted ? "orange" : "yellow"));
-      rect(this.xPosition + 5, this.yPosition - 5, 18 * this.word.length, 30);
-      fill(color("black"));
-      text(
-        this.word.substring(this.correctlyTypedString.length),
-        this.xPosition + 5,
-        this.yPosition - 10 + 10
-      );
+      if (this.showWordBox) {
+        rectMode(CENTER);
+        fill(color(this.isTargeted ? "orange" : "yellow"));
+        rect(this.xPosition + 5, this.yPosition - 5, 18 * this.word.length, 30);
+        fill(color("black"));
+
+        text(
+          this.word.substring(this.correctlyTypedString.length),
+          this.xPosition + 5,
+          this.yPosition - 10 + 10
+        );
+      }
       this.skin[this.instance].drawImageLoop(
         this.xPosition - 20,
         this.yPosition

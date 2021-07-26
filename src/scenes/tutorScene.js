@@ -75,7 +75,7 @@ class TutorScene {
   keyPressed(key) {
     if (String(key) === " ") {
       if (this.zombieManager.zombies.length === 1) {
-        this.sceneManager.enterScene("gameOver");
+        this.sceneManager.enterScene("levelComplete");
         return;
       }
     }
@@ -108,6 +108,9 @@ class TutorScene {
       this.zombieManager.update();
       if (this.zombieManager.zombies.length < this.threshHold) {
         this.generateWords();
+      }
+      if (this.zombieManager.player.health < 0) {
+        this.sceneManager.enterScene("gameOverTutor");
       }
     }
   }
