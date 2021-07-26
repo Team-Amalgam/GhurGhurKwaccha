@@ -75,6 +75,9 @@ class ZombieManager {
           this.zombieToShoot.chetVayo(this.deadZombies);
           this.deadZombies.push(this.zombieToShoot);
           this.player.instance = 3;
+          if (this.deadZombies.length > 4) {
+            this.deadZombies.shift();
+          }
           // this.zombies = this.zombies.filter(
           //   (zombie) => zombie.id != this.zombieToShoot.id
           // );
