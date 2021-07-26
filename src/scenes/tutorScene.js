@@ -24,13 +24,22 @@ class TutorScene {
         this.levelSelectionButtons.push(button);
       });
     });
+    this.backButton = new Button("Back", windowWidth / 10, windowHeight * 0.15);
+    this.backButton2 = new Button(
+      "Back",
+      windowWidth / 2,
+      (8 * windowHeight) / 10
+    );
   }
 
   draw() {
     clear();
-    background(220);
+    background(grass);
+    // background(220);
     if (this.isLevelSelected) {
       textAlign(LEFT);
+      fill(color("white"));
+      textFont("Georgia", 32);
       text(
         `Words Type: ${this.zombieManager.zombiesKillCount}/${this.totalExerciseWordLength}`,
         50,
@@ -38,8 +47,9 @@ class TutorScene {
       );
       textAlign(CENTER);
       this.zombieManager.draw();
+      this.backButton.draw();
     } else {
-      fill(color("black"));
+      fill(color("white"));
       textFont("Georgia", 32);
       textAlign(LEFT);
       text("Home Key", 230, 70);
@@ -47,6 +57,7 @@ class TutorScene {
       text("Bottom Key", 230, 310);
       text("Numeric Key", 230, 430);
       this.levelSelectionButtons.map((button) => button.draw());
+      this.backButton2.draw();
     }
   }
   generateWords() {
@@ -59,7 +70,7 @@ class TutorScene {
       this.lastZombieIndex + this.batchSize
     );
     this.lastZombieIndex += words.length;
-    this.zombieManager.generateZombies(words, 2);
+    this.zombieManager.generateZombies(words, 150);
   }
   keyPressed(key) {
     if (String(key) === " ") {
@@ -73,6 +84,12 @@ class TutorScene {
   onSceneEnter() {
     console.log(" SceneEnter : Tutor ");
     this.isLevelSelected = false;
+    this.backButton.callOnMousePress(() =>
+      this.sceneManager.enterScene("menu")
+    );
+    this.backButton2.callOnMousePress(() =>
+      this.sceneManager.enterScene("menu")
+    );
   }
   onSceneExit() {
     this.lastZombieIndex = 0;
@@ -97,6 +114,9 @@ class TutorScene {
   mouseClicked() {
     if (!this.isLevelSelected) {
       this.levelSelectionButtons.map((button) => button.mouseClicked());
+      this.backButton2.mouseClicked();
+    } else {
+      this.backButton.mouseClicked();
     }
   }
 }

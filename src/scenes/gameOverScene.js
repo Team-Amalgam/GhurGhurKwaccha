@@ -7,7 +7,8 @@ class GameOverScene {
   }
   draw() {
     clear();
-    background(220);
+    // background(220);
+    background(grass);  
     fill(color("black"));
     text("Congratulations!! Exercise complete", width / 2, height / 2);
     this.button.draw();

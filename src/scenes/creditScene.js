@@ -5,7 +5,8 @@ class CreditScene {
   }
   draw() {
     clear();
-    background(220);
+    // background(220);
+    background(grass);    
     text("Credit Scene", width / 2, 100);
     rect(200, 250, 100, 100);
     rect(200, 400, 100, 100);

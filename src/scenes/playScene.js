@@ -5,12 +5,15 @@ class PlayScene {
     this.zombieToFire;
     this.batchSize = 15;
     this.threshold = 5;
+    this.backButton = new Button("Back", windowWidth / 10, windowHeight / 10);
   }
 
   draw() {
     clear();
-    background(220);
+    background(grass);
+    // background(220);
     this.zombieManager.draw();
+    this.backButton.draw();
   }
   generateWords() {
     let index = Math.trunc(Math.random() * quotes.length);
@@ -20,7 +23,7 @@ class PlayScene {
     if (words.length > this.batchSize) {
       words = words.slice(0, this.batchSize);
     }
-    this.zombieManager.generateZombies(words, 1.2);
+    this.zombieManager.generateZombies(words, 150);
   }
   keyPressed(key) {
     this.zombieManager.keyPressed(key);
@@ -28,6 +31,9 @@ class PlayScene {
   onSceneEnter() {
     console.log(" SceneEnter : Play ");
     this.zombieManager = new ZombieManager();
+    this.backButton.callOnMousePress(() =>
+      this.sceneManager.enterScene("menu")
+    );
   }
   onSceneExit() {
     console.log(" SceneExit : Play ");
@@ -37,5 +43,8 @@ class PlayScene {
     if (this.zombieManager.zombies.length < this.threshold) {
       this.generateWords();
     }
+  }
+  mouseClicked() {
+    this.backButton.mouseClicked();
   }
 }
