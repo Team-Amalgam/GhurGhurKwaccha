@@ -4,14 +4,12 @@ class MenuScene {
     this.sceneName = "menu";
     this.playModeButton = new Button("Play Mode", windowWidth / 2, 300);
     this.tutorModeButton = new Button("Tutor Mode", windowWidth / 2, 200);
-    this.exitButton = new Button("Exit", windowWidth / 2, 400);
   }
   draw() {
     clear();
-    background(grass); 
+    background(grass);
     this.playModeButton.draw();
     this.tutorModeButton.draw();
-    this.exitButton.draw();
   }
   keyPressed(key) {
     if (String(key) === "s") {
@@ -26,7 +24,6 @@ class MenuScene {
     this.tutorModeButton.callOnMousePress(() =>
       this.sceneManager.enterScene("tutor")
     );
-    this.exitButton.callOnMousePress(() => window.close());
   }
   onSceneExit() {
     console.log(" SceneExit : Menu ");
@@ -37,6 +34,5 @@ class MenuScene {
   mouseClicked() {
     this.playModeButton.mouseClicked();
     this.tutorModeButton.mouseClicked();
-    this.exitButton.mouseClicked();
   }
 }
