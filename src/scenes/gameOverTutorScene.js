@@ -9,8 +9,10 @@ class GameOverTutorScene {
     clear();
     // background(220);
     background(grass);
-    fill(color("black"));
-    text("Try Again!!", width / 2, height / 2.2);
+    // fill(color("black"));
+
+    // text("Try Again!!", width / 2, height / 2.2);
+    keyboardAnalytics.displayAnalytics(width / 2, height / 2.2);
     this.button.draw();
   }
   mouseClicked() {
