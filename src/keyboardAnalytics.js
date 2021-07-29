@@ -33,29 +33,30 @@ class KeyboardAnalytics {
     this.accuracyComment =
       this.accuracyComments[int(this.accuracy / 25)][int(Math.random() * 2)];
   }
-  displayAnalytics(
-    xPos,
-    yPos //xPos,yPos->top left
-  ) {
-    fill(color("black"));
-    text("Game Over !! Please restart the game", xPos, yPos);
+  displayAnalytics(xPos,yPos) //xPos,yPos->top left
+   {
+    fill(6, 26, 64, 200);
+    rect(xPos, yPos - windowHeight / 23, windowWidth / 2, windowHeight / 5 , 20);
+    fill(255);
+    text("Game Over !! Please restart the game", xPos, yPos - windowHeight/11);
     text(
       `Accuracy = ${this.accuracy.toPrecision(3)}% (${this.accuracyComment})`,
       xPos,
-      yPos + windowHeight / 43
+      yPos - windowHeight / 20
     );
     text(
       `Raw speed = ${this.rawWPM.toPrecision(4)} wpm`,
       xPos,
-      yPos + windowHeight / 21.6
+      yPos - 7
     );
     text(
       `Corrected speed = ${this.correctedWPM.toPrecision(4)}wpm (${
         this.speedComment
       }) `,
       xPos,
-      yPos + windowHeight / 14.4
+      yPos + 15
     );
+  
   }
   reset() {
     this.keyStrokeCount = 0;

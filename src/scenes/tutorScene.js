@@ -70,7 +70,7 @@ class TutorScene {
       this.lastZombieIndex + this.batchSize
     );
     this.lastZombieIndex += words.length;
-    this.zombieManager.generateZombies(words, 120);
+    this.zombieManager.generateZombies(words, 200);
   }
   keyPressed(key) {
     if (String(key) === " ") {
