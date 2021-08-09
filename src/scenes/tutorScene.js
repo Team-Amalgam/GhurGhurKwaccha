@@ -107,6 +107,12 @@ class TutorScene {
   update() {
     if (this.isLevelSelected) {
       this.zombieManager.update();
+      if (
+        this.totalExerciseWordLength === this.zombieManager.zombiesKillCount
+      ) {
+        this.sceneManager.enterScene("gameOverTutor");
+        return;
+      }
       if (this.zombieManager.zombies.length < this.threshHold) {
         this.generateWords();
       }
