@@ -49,11 +49,9 @@ function draw() {
   if (sceneManager.currentScene.sceneName === "menu") {
     if (slider.value()) {
       currentLanguage = "nepali";
-      keyboard.changeLanguage("nepali");
       image(languageFlag[0], windowWidth - 45, 20, 30, 30);
     } else {
       currentLanguage = "english";
-      keyboard.changeLanguage("english");
       image(languageFlag[1], windowWidth - 45, 30, 30, 20);
     }
   }

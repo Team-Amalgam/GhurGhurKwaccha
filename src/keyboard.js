@@ -59,14 +59,9 @@ class Keyboard {
       // Add attributes/classes/id
       keyElement.setAttribute("type", "button");
       keyElement.classList.add("keyboard__key");
-      if (this.language == "english") {
-        keyElement.style.fontFamily =
-          '"Lucida Console", "Courier New", monospace';
-        keyElement.style.fontSize = "20px";
-      } else if (this.language == "nepali") {
-        keyElement.style.fontFamily = "preeti";
-        keyElement.style.fontSize = "40px";
-      }
+      keyElement.style.fontFamily =
+        '"Lucida Console", "Courier New", monospace';
+      keyElement.style.fontSize = "20px";
       keyElement.setAttribute("id", key);
       switch (key) {
         case "backspace":
@@ -112,19 +107,6 @@ class Keyboard {
     return this.fragment;
   }
 
-  changeLanguage(language) {
-    this.language = language;
-    var keys = document.querySelectorAll("button");
-    for (var i = 0; i < keys.length; i++) {
-      if (this.language == "english") {
-        keys[i].style.fontFamily = '"Lucida Console", "Courier New", monospace';
-        keys[i].style.fontSize = "20px";
-      } else if (this.language == "nepali") {
-        keys[i].style.fontFamily = "preeti";
-        keys[i].style.fontSize = "40px";
-      }
-    }
-  }
   _triggerEvent(handlerName) {
     if (typeof this.eventHandlers[handlerName] == "function") {
       this.eventHandlers[handlerName](this.properties.value);

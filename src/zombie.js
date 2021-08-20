@@ -43,12 +43,11 @@ class Zombie {
         fill(color(this.isTargeted ? "orange" : "yellow"));
         rect(this.xPosition + 5, this.yPosition - 5, 18 * this.word.length, 30);
         fill(color("black"));
-
-        text(
-          this.word.substring(this.correctlyTypedString.length),
-          this.xPosition + 5,
-          this.yPosition - 10 + 10
-        );
+        var displayText = this.word.substring(this.correctlyTypedString.length);
+        if (currentLanguage == "nepali") {
+          displayText = translateToUnicode(displayText);
+        }
+        text(displayText, this.xPosition + 5, this.yPosition - 10 + 10);
       }
       this.skin[this.instance].drawImageLoop(
         this.xPosition - 20,
