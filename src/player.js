@@ -28,6 +28,7 @@ class Player {
   }
   draw() {
     image(platform, this.xPosition, this.yPosition);
+    image(log, this.xPosition+windowWidth*0.15, this.yPosition-windowHeight*0.33);
     if (this.isAlive) {
       rectMode(CORNER);
       rect(this.healthPositionX - 1, this.healthPositionY - 1, 102, 7);
@@ -41,6 +42,7 @@ class Player {
       );
     }
   }
+
   update() {
     // this.skin[0].update();
   }

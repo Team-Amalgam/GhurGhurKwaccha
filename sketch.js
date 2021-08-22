@@ -5,6 +5,7 @@ var gif_zomb;
 //Player [0, 1, 2, 3] [Blinking, Dying, Idle, Throwing]
 var gif_player;
 var platform;
+var log;
 var grass;
 var bomb_img;
 var deltaTimeInSeconds;
@@ -19,6 +20,8 @@ var deathSounds;
 
 var bulletHitTime = 2;
 
+var keyboardAnalytics;
+
 function setup() {
   createCanvas(windowWidth, windowHeight);
   var sceneList = [
@@ -26,8 +29,11 @@ function setup() {
     MenuScene,
     CreditScene,
     TutorScene,
-    GameOverScene,
+    GameOverPlayScene,
+    GameOverTutorScene,
+    LevelCompleteScene,
   ];
+  keyboardAnalytics = new KeyboardAnalytics();
   keyboard = new Keyboard("US", currentLanguage);
   sceneManager = new SceneManager(sceneList);
   sceneManager.enterScene("menu");
@@ -44,32 +50,34 @@ function draw() {
   if (sceneManager.currentScene.sceneName === "menu") {
     if (slider.value()) {
       currentLanguage = "nepali";
-      keyboard.changeLanguage("nepali");
       image(languageFlag[0], windowWidth - 45, 20, 30, 30);
     } else {
       currentLanguage = "english";
-      keyboard.changeLanguage("english");
       image(languageFlag[1], windowWidth - 45, 30, 30, 20);
     }
   }
 }
 function keyPressed() {
   sceneManager.keyPressed(key);
+  hover_sound[0].play();
+  setTimeout(() => hover_sound[0].stop(), 200);
 }
-
+function keyTyped() {
+  keyboardAnalytics.setTypedKey(key);
+}
 function windowResized() {
   resizeCanvas(windowWidth, windowHeight);
 }
 function preload() {
   grass = loadImage("assets/Game Objects/grass.png");
   platform = loadImage("assets/Game Objects/Platform/platform.png");
+  log=loadImage("assets/Game Objects/Platform/Log.png")
   //Bomb
   bomb_img = [];
   bomb_img[0] = loadImage("assets/Game Objects/Bomb.png");
   bomb_img[1] = loadImage("assets/Game Objects/Projectile.png");
   gif_zomb = [];
   gif_player = [];
-
   //Player [0, 1, 2, 3] [Blinking, Dying, Idle, Throwing]
   gif_player[0] = loadAnimatedSprite(
     17,
@@ -146,7 +154,7 @@ function preload() {
   soundFormats("mp3");
   hover_sound = [loadSound("assets/Sounds/hover_sound.mp3")];
   deathSounds = [];
-  for (var i = 0; i <= 9; i++) {
+  for (var i = 0; i <= 2; i++) {
     deathSounds.push(loadSound(`assets/Sounds/Death/deathSound${i}.mp3`));
   }
   nepaliFont = loadFont("css/font.otf");

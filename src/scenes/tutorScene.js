@@ -10,20 +10,14 @@ class TutorScene {
     this.lastZombieIndex = 0;
     this.totalExerciseWordLength = 0;
     this.levelSelectionButtons = [];
-    var buttons = ["Home Key", "Top Key", "Bottom Key", "Number"];
-    buttons.map((text, index) => {
-      Object.keys(tutorData[index]).map((a) => {
-        var button = new Button(
-          `${int(a) + 1}`,
-          250 + a * 70,
-          120 + index * 120,
-          50,
-          50
-        );
-        button.callOnMousePress(() => this.startLevel(`${index} ${a}`));
-        this.levelSelectionButtons.push(button);
-      });
+
+    var buttons = [0, 1, 2, 3];
+    buttons.map((i) => {
+      var button = new Button(i + 1, 250 + i * 70, 120, 50, 50);
+      button.callOnMousePress(() => this.startLevel(i));
+      this.levelSelectionButtons.push(button);
     });
+
     this.backButton = new Button("Back", windowWidth / 10, windowHeight * 0.15);
     this.backButton2 = new Button(
       "Back",
@@ -52,17 +46,15 @@ class TutorScene {
       fill(color("white"));
       textFont("Georgia", 32);
       textAlign(LEFT);
-      text("Home Key", 230, 70);
-      text("Top Key", 230, 190);
-      text("Bottom Key", 230, 310);
-      text("Numeric Key", 230, 430);
+      text("Select Level", 230, 70);
+
       this.levelSelectionButtons.map((button) => button.draw());
       this.backButton2.draw();
     }
   }
   generateWords() {
-    let levels = this.level.split(" ");
-    let words = tutorData[int(levels[0])][int(levels[1])];
+    let words = tutorData[currentLanguage][this.level];
+    console.log(this.level);
     this.totalExerciseWordLength = words.split(" ").length;
     words = words.split(" ").filter((word) => word != "");
     words = words.slice(
@@ -70,18 +62,19 @@ class TutorScene {
       this.lastZombieIndex + this.batchSize
     );
     this.lastZombieIndex += words.length;
-    this.zombieManager.generateZombies(words, 150);
+    this.zombieManager.generateZombies(words, 120);
   }
   keyPressed(key) {
     if (String(key) === " ") {
       if (this.zombieManager.zombies.length === 1) {
-        this.sceneManager.enterScene("gameOver");
+        this.sceneManager.enterScene("levelComplete");
         return;
       }
     }
     this.zombieManager.keyPressed(key);
   }
   onSceneEnter() {
+    keyboardAnalytics.reset();
     console.log(" SceneEnter : Tutor ");
     this.isLevelSelected = false;
     this.backButton.callOnMousePress(() =>
@@ -106,8 +99,17 @@ class TutorScene {
   update() {
     if (this.isLevelSelected) {
       this.zombieManager.update();
+      if (
+        this.totalExerciseWordLength === this.zombieManager.zombiesKillCount
+      ) {
+        this.sceneManager.enterScene("gameOverTutor");
+        return;
+      }
       if (this.zombieManager.zombies.length < this.threshHold) {
         this.generateWords();
+      }
+      if (this.zombieManager.player.health < 0) {
+        this.sceneManager.enterScene("gameOverTutor");
       }
     }
   }

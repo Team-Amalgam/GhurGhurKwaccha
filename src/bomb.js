@@ -15,24 +15,29 @@ class Bomb {
     image(this.skin[this.skinIndex], this.xPosition, this.yPosition);
   }
   generatePath() {
-    this.xPosition = this.player.xPosition;
+    var bombOffset = windowWidth / 16;
+    this.xPosition = this.player.xPosition + bombOffset;
     this.yPosition = this.player.yPosition;
-    var xOffset = this.enemy.xPosition - this.player.xPosition;
-    var yOffset = this.enemy.yPosition - this.player.yPosition;
+    var xOffset = this.enemy.xPosition - this.xPosition;
+    var yOffset = this.enemy.yPosition - this.yPosition;
 
-    this.predictedDistance = xOffset - this.enemy.speed * bulletHitTime;
+    this.bulletTime =
+      Math.max(0.3, this.enemy.xPosition / windowWidth) * bulletHitTime;
+
+    this.predictedDistance = xOffset - this.enemy.speed * this.bulletTime;
     if (this.predictedDistance < 0.2 * windowWidth)
-      this.predictedDistance = 0.18 * windowWidth;
-    this.speedX = this.predictedDistance / bulletHitTime;
+      this.predictedDistance = 0.18 * windowWidth - bombOffset;
+    this.speedX = this.predictedDistance / this.bulletTime;
     this.speedY =
-      (yOffset - (this.g * bulletHitTime * bulletHitTime) / 2) / bulletHitTime;
+      (yOffset - (this.g * this.bulletTime * this.bulletTime) / 2) /
+      this.bulletTime;
     setTimeout(() => {
       this.skinIndex = 1;
       this.speedX = 50;
       this.speedY = 50;
       this.g = 0;
-    }, bulletHitTime * 1000 + 10);
-    setTimeout(() => (this.exploded = true), bulletHitTime * 1000 + 250);
+    }, this.bulletTime * 1000 + 10);
+    setTimeout(() => (this.exploded = true), this.bulletTime * 1000 + 250);
   }
   updateBomb() {
     this.speedY += this.g * deltaTimeInSeconds;

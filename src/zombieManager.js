@@ -11,35 +11,68 @@ class ZombieManager {
       setTimeout(() => keyboard.open(), 500);
       this.zombieLane = 3;
     }
-    this.bombs = [];
+    this.bombs = []; //calculate total number of typeable key strokes
   }
 
   draw() {
-    if (currentLanguage == "nepali") {
-      textFont(nepaliFont, 30);
-    } else {
-      textFont("Georgia", 22);
-    }
+    textFont("Georgia", 22);
     //Draw Text Buffer
     rectMode(CENTER);
     fill(24, 78, 119, 200);
-    rect(
-      this.player.xPosition + windowWidth * 0.05,
-      this.player.yPosition - windowHeight * 0.06,
-      16 * this.typedString.length,
-      30
-    );
-    fill(color("white"));
-    text(
-      this.typedString,
-      this.player.xPosition + windowWidth * 0.05,
-      this.player.yPosition - windowHeight * 0.05
-    );
+    if (currentLanguage == "nepali") {
+      rect(
+        this.player.xPosition + windowWidth * 0.05,
+        this.player.yPosition - windowHeight * 0.06,
+        16 * this.typedString.length,
+        30
+      );
+      fill(color("white"));
+      text(
+        translateToUnicode(this.typedString),
+        this.player.xPosition + windowWidth * 0.05,
+        this.player.yPosition - windowHeight * 0.05
+      );
+    } else {
+      rect(
+        this.player.xPosition + windowWidth * 0.05,
+        this.player.yPosition - windowHeight * 0.06,
+        16 * this.typedString.length,
+        30
+      );
+      fill(color("white"));
+      text(
+        this.typedString,
+        this.player.xPosition + windowWidth * 0.05,
+        this.player.yPosition - windowHeight * 0.05
+      );
+    }
+    if (this.zombieToShoot.word) {
+      rectMode(CENTER);
+      fill(24, 78, 119, 200);
+      rect(
+        this.player.xPosition + windowWidth * 0.05,
+        this.player.yPosition - windowHeight * 0.1,
+        16 * this.zombieToShoot.word.length,
+        30
+      );
+      fill(color("white"));
+      text(
+        this.zombieToShoot.word,
+        this.player.xPosition + windowWidth * 0.05,
+        this.player.yPosition - windowHeight * 0.09
+      );
+    }
 
     this.player.draw();
     // this.bombs.drawBomb();
-    this.zombies.forEach((zombie) => zombie.draw());
     this.deadZombies.forEach((zombie) => zombie.draw());
+    for (var i = this.zombies.length - 1; i >= 0; i--) {
+      this.zombies[i].draw();
+    }
+    // this.zombies.forEach((zombie) => zombie.draw());
+    if (typeof this.zombieToShoot.draw === "function") {
+      this.zombieToShoot.draw();
+    }
     this.bombs.forEach((bomb) => bomb.drawBomb());
     textFont("Georgia", 22);
   }
@@ -70,9 +103,13 @@ class ZombieManager {
           this.zombieToShoot &&
           this.typedString === this.zombieToShoot.word
         ) {
+          keyboardAnalytics.setCorrectlyTypedWords(this.zombieToShoot.word);
+          // keyboardAnalytics.correctlyTypedWords.push(this.zombieToShoot.word);
           this.typedString = "";
-          this.bombs.push(new Bomb(this.player, this.zombieToShoot));
-          this.zombieToShoot.chetVayo(this.deadZombies);
+          var newBomb = new Bomb(this.player, this.zombieToShoot);
+          this.bombs.push(newBomb);
+          this.zombieToShoot.showWordBox = false;
+          this.zombieToShoot.chetVayo(newBomb.bulletTime);
           this.deadZombies.push(this.zombieToShoot);
           this.player.instance = 3;
           if (this.deadZombies.length > 4) {
@@ -86,7 +123,7 @@ class ZombieManager {
           setTimeout(
             () =>
               (this.zombies = this.zombies.filter((zombie) => zombie.isAlive)),
-            bulletHitTime * 1000
+            newBomb.bulletTime * 1000
           );
 
           //shooting
@@ -109,6 +146,9 @@ class ZombieManager {
   }
 
   setZombieToShoot() {
+    if (keyboardAnalytics.startTime === null) {
+      keyboardAnalytics.setStartTime();
+    }
     if (this.typedString.length > 0) {
       let matchingZombie = this.zombies.find(
         (zombie) => zombie.word.startsWith(this.typedString) && !zombie.isDying
@@ -131,6 +171,9 @@ class ZombieManager {
       if (this.zombieToShoot.correctlyTypedString) {
         this.zombieToShoot.correctlyTypedString = "";
       }
+      this.zombieToShoot = this.zombies.find(
+        (zombie) => zombie.isDying === false
+      );
     }
   }
 

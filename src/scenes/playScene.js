@@ -23,12 +23,13 @@ class PlayScene {
     if (words.length > this.batchSize) {
       words = words.slice(0, this.batchSize);
     }
-    this.zombieManager.generateZombies(words, 150);
+    this.zombieManager.generateZombies(words, 180);
   }
   keyPressed(key) {
     this.zombieManager.keyPressed(key);
   }
   onSceneEnter() {
+    keyboardAnalytics.reset();
     console.log(" SceneEnter : Play ");
     this.zombieManager = new ZombieManager();
     this.backButton.callOnMousePress(() =>
@@ -42,6 +43,9 @@ class PlayScene {
     this.zombieManager.update();
     if (this.zombieManager.zombies.length < this.threshold) {
       this.generateWords();
+    }
+    if (this.zombieManager.player.health < 0) {
+      this.sceneManager.enterScene("gameOverPlay");
     }
   }
   mouseClicked() {
