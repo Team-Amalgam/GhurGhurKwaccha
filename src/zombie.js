@@ -58,7 +58,7 @@ class Zombie {
     }
   }
   update() {
-    if (this.xPosition > windowWidth * 0.2) {
+    if (this.xPosition > windowWidth * 0.27) {
       this.xPosition -= this.speed * deltaTimeInSeconds;
     } else {
       this.attack();
