@@ -5,6 +5,7 @@ var gif_zomb;
 //Player [0, 1, 2, 3] [Blinking, Dying, Idle, Throwing]
 var gif_player;
 var platform;
+var log;
 var grass;
 var bomb_img;
 var deltaTimeInSeconds;
@@ -63,13 +64,13 @@ function windowResized() {
 function preload() {
   grass = loadImage("assets/Game Objects/grass.png");
   platform = loadImage("assets/Game Objects/Platform/platform.png");
+  log=loadImage("assets/Game Objects/Platform/Log.png")
   //Bomb
   bomb_img = [];
   bomb_img[0] = loadImage("assets/Game Objects/Bomb.png");
   bomb_img[1] = loadImage("assets/Game Objects/Projectile.png");
   gif_zomb = [];
   gif_player = [];
-
   //Player [0, 1, 2, 3] [Blinking, Dying, Idle, Throwing]
   gif_player[0] = loadAnimatedSprite(
     17,
