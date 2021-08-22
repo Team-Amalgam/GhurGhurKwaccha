@@ -25,8 +25,8 @@ class Bomb {
       Math.max(0.3, this.enemy.xPosition / windowWidth) * bulletHitTime;
 
     this.predictedDistance = xOffset - this.enemy.speed * this.bulletTime;
-    if (this.predictedDistance < 0.2 * windowWidth)
-      this.predictedDistance = 0.18 * windowWidth - bombOffset;
+    if (this.predictedDistance < 0.27 * windowWidth)
+      this.predictedDistance = 0.23 * windowWidth - bombOffset;
     this.speedX = this.predictedDistance / this.bulletTime;
     this.speedY =
       (yOffset - (this.g * this.bulletTime * this.bulletTime) / 2) /
