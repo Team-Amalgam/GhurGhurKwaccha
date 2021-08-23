@@ -18,6 +18,10 @@ class PlayScene {
   generateWords() {
     let index = Math.trunc(Math.random() * quotes.length);
     let quote = quotes[index];
+    if (currentLanguage === "nepali") {
+      index = Math.trunc(Math.random() * nepaliQuotes.length);
+      quote = nepaliQuotes[index];
+    }
     //let quote = "helllo i am happyhdskad";
     let words = quote.split(" ");
     if (words.length > this.batchSize) {

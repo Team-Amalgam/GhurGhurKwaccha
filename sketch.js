@@ -9,6 +9,8 @@ var log;
 var grass;
 var bomb_img;
 var deltaTimeInSeconds;
+var help_text;
+var credit_image;
 
 var nepaliFont;
 var currentLanguage = "english";
@@ -28,6 +30,7 @@ function setup() {
     PlayScene,
     MenuScene,
     CreditScene,
+    HelpScene,
     TutorScene,
     GameOverPlayScene,
     GameOverTutorScene,
@@ -70,8 +73,10 @@ function windowResized() {
 }
 function preload() {
   grass = loadImage("assets/Game Objects/grass.png");
+  help_text = loadImage("assets/help.png");
+  credit_image = loadImage("assets/credit.png");
   platform = loadImage("assets/Game Objects/Platform/platform.png");
-  log=loadImage("assets/Game Objects/Platform/Log.png")
+  log = loadImage("assets/Game Objects/Platform/Log.png");
   //Bomb
   bomb_img = [];
   bomb_img[0] = loadImage("assets/Game Objects/Bomb.png");
